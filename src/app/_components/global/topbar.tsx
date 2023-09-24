@@ -44,7 +44,7 @@ const Topbar = () => {
               <BsFillTelephoneFill
                 style={{ marginRight: 5, color: theme.palette.secondary.main }}
               />
-              {INFO.phone}
+              {INFO.phone.text}
             </Link>
             <Link
               underline="none"
@@ -67,7 +67,7 @@ const Topbar = () => {
               <BsFillEnvelopeFill
                 style={{ marginRight: 5, color: theme.palette.secondary.main }}
               />
-              {INFO.email}
+              {INFO.email.text}
             </Link>
             <Typography
               sx={{
@@ -85,9 +85,7 @@ const Topbar = () => {
               <BsClockFill
                 style={{ marginRight: 5, color: theme.palette.secondary.main }}
               />
-              {INFO.openingHours[0].daysOfWeek +
-                " : " +
-                INFO.openingHours[0].time}
+              {INFO.workingHours.text}
             </Typography>
           </Grid>
           <Grid item sm={1}></Grid>

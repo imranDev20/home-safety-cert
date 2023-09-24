@@ -1,22 +1,40 @@
+import { HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
+import { FaTwitter, FaFacebookF, FaYoutube, FaInstagram } from "react-icons/fa";
+
 export const DRAWER_WIDTH = 240;
 
 export const NAV_LINKS = ["Home", "About", "Services", "Pricing", "Contact"];
 
-export const INFO = {
-  openingHours: [
-    {
-      daysOfWeek: "Mon - Fri",
-      time: "08:00-18:00",
-    },
-  ],
-  email: "hello@homesafetycert.co.uk",
-  phone: "020 3488 4929",
-  location: "London, Great Britain, UK",
-};
+export const SOCIALS = [
+  { id: 1, name: "Facebook", icon: FaFacebookF, href: "https://facebook.com" },
+  { id: 2, name: "Twitter", icon: FaTwitter, href: "https://facebook.com" },
+  { id: 3, name: "YouTube", icon: FaYoutube, href: "https://facebook.com" },
+  { id: 4, name: "Instagram", icon: FaInstagram, href: "https://facebook.com" },
+];
 
-export const SOCIALS = {
-  facebook: {
-    icon: "",
-    link: "https://www.facebook.com/Homesafetycert",
+export const INFO = {
+  address: {
+    id: 1,
+    type: "text",
+    text: "London, Great Britain, UK",
+    icon: HiMapPin,
+  },
+  email: {
+    id: 2,
+    type: "link-email",
+    text: "hello@homesafetycert.co.uk",
+    icon: HiEnvelope,
+  },
+  phone: {
+    id: 3,
+    type: "link-phone",
+    text: "020 3488 4929",
+    icon: HiPhone,
+  },
+  workingHours: {
+    id: 3,
+    type: "text",
+    text: "Mon - Fri: 08:00 - 18:00",
+    icon: HiPhone,
   },
 };

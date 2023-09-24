@@ -1,7 +1,7 @@
 import * as React from "react";
-import ThemeRegistry from "./(root)/components/global/theme-registry";
-import DrawerAppBar from "./(root)/components/global/drawer";
-import Topbar from "./(root)/components/global/topbar";
+import ThemeRegistry from "./_components/global/theme-registry";
+import DrawerAppBar from "./_components/global/drawer";
+import Topbar from "./_components/global/topbar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
