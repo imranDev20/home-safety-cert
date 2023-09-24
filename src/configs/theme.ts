@@ -66,39 +66,59 @@ export const theme = createTheme({
       fontSize: 16,
       lineHeight: 1.8,
       letterSpacing: ".3px",
-      color: "#888888",
+      color: "#666",
     },
   },
   palette: {
     primary: {
-      light: "#ffa726",
+      light: "#5d9cec",
       main: "#004975",
-      dark: "#ef6c00",
-      contrastText: "rgba(255,255,255, 1)",
+      dark: "#002048",
+      contrastText: "#fff",
     },
     secondary: {
-      light: "#ffa726",
-      main: "#F7C355",
-      dark: "#ef6c00",
-      // contrastText: "rgba(0, 0, 0, 0.87)",
-      contrastText: "rgba(255,255,255, 1)",
+      light: "#ffb14e",
+      main: "#f7c355",
+      dark: "#bf8c2a",
+      contrastText: "#fff",
     },
-
-    border: {
-      main: "#F1F1F1",
+    error: {
+      light: "#ff6659",
+      main: "#f44336",
+      dark: "#b22a1d",
+      contrastText: "#fff",
+    },
+    success: {
+      light: "#5af158",
+      main: "#4caf50",
+      dark: "#357a38",
+      contrastText: "#fff",
+    },
+    warning: {
+      light: "#ffe74c",
+      main: "#ffca28",
+      dark: "#b2951d",
+      contrastText: "#000",
+    },
+    info: {
+      light: "#64b5f6",
+      main: "#2196f3",
+      dark: "#1769aa",
+      contrastText: "#fff",
     },
     text: {
-      primary: "#888888",
+      primary: "#333",
+      secondary: "#666",
     },
     background: {
-      default: "#F7F7F7",
+      default: "white",
+      // default: "#f7f7f7",
+      paper: "#fff",
     },
-
-    contrastThreshold: 3,
-    tonalOffset: 0.2,
+    divider: "#ddd",
   },
+
   components: {
-    // Name of the component
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) =>

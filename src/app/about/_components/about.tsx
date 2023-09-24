@@ -100,11 +100,13 @@ const About = () => {
                 Call Anytime:
               </Typography>
               <Typography
-                component="span"
+                component="a"
+                href={"tel:" + INFO.phone.text}
                 sx={{
-                  color: "black.main",
+                  color: "text.primary",
                   fontSize: 22,
                   fontWeight: 600,
+                  textDecoration: "none",
                 }}
               >
                 {INFO.phone.text}

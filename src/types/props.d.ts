@@ -1,6 +1,7 @@
 import { TypographyProps } from "@mui/material";
 import { StaticImageData } from "next/image";
 import { ReactNode, ReactElement } from "react";
+import { Faq } from "./misc";
 
 export type DrawerAppBarProps = {
   children: ReactNode;
@@ -24,4 +25,8 @@ export type ParagraphProps = TypographyProps & {
 export type HeadingProps = TypographyProps & {
   children: ReactNode;
   headingType: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+};
+
+export type FaqAccordionProps = {
+  faqs: Faq[];
 };

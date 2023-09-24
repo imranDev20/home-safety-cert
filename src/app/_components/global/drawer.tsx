@@ -108,12 +108,7 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                     sx={{
                       fontWeight: 600,
                       mx: 1,
-                      color: location?.pathname.includes(item.toLowerCase())
-                        ? "secondary.main"
-                        : "black.main",
-                      "&:hover": {
-                        color: "primary.main",
-                      },
+                      color: "text.primary",
                     }}
                   >
                     {item}
