@@ -19,8 +19,8 @@ import {
   useScrollTrigger,
   Menu,
   Grid,
-  alpha,
 } from "@mui/material";
+import { alpha } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import { CgArrowLongRight } from "react-icons/cg";
 import { ExpandMore, Menu as MenuIcon } from "@mui/icons-material";
