@@ -4,7 +4,6 @@ import DrawerAppBar from "./_components/global/drawer";
 import Topbar from "./_components/global/topbar";
 import { Metadata } from "next";
 import Footer from "./_components/global/footer";
-import NextTopLoader from "nextjs-toploader";
 import TopLoader from "./_components/global/top-loader";
 
 export const metadata: Metadata = {

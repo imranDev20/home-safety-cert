@@ -15,7 +15,29 @@ import { Faq, Service } from "@/types/misc";
 
 export const DRAWER_WIDTH = 240;
 
-export const NAV_LINKS = ["Home", "About", "Services", "Pricing", "Contact"];
+export const NAV_LINKS = [
+  {
+    label: "Home",
+    route: "/",
+  },
+  {
+    label: "About",
+    route: "/about",
+  },
+  {
+    label: "Services",
+    route: "/services",
+    hasChild: true,
+  },
+  {
+    label: "Pricing",
+    route: "/pricing",
+  },
+  {
+    label: "Contact",
+    route: "/contact",
+  },
+];
 
 export const SOCIALS = [
   { id: 1, name: "Facebook", icon: FaFacebookF, href: "https://facebook.com" },

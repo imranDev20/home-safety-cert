@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import {
   AppBar,
   Box,
@@ -12,17 +12,22 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  MenuItem,
   Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
+  Menu,
+  Grid,
+  alpha,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { CgArrowLongRight } from "react-icons/cg";
-import { Menu } from "@mui/icons-material";
+import { ExpandMore, Menu as MenuIcon } from "@mui/icons-material";
 import Link from "next/link";
 
 import { DrawerAppBarProps, HideOnScrollProps } from "@/types/props";
-import { DRAWER_WIDTH, NAV_LINKS } from "@/shared/constants";
+import { DRAWER_WIDTH, NAV_LINKS, SERVICES } from "@/shared/constants";
 
 function HideOnScroll({ children }: HideOnScrollProps) {
   const trigger = useScrollTrigger();
@@ -36,9 +41,21 @@ function HideOnScroll({ children }: HideOnScrollProps) {
 
 const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleMenuClick = (event: MouseEvent<HTMLElement>) => {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget);
+    }
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   const drawer = (
@@ -49,13 +66,13 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
       <Divider />
       <List>
         {NAV_LINKS.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.route} disablePadding>
             <ListItemButton
               component={Link}
-              href={item === "Home" ? "/" : "/" + item.toLowerCase()}
+              href={item.route}
               sx={{ textAlign: "center" }}
             >
-              <ListItemText primary={item} />
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -95,25 +112,108 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
               >
                 Home Safety Cert
               </Typography>
-              <Box sx={{ display: { xs: "none", lg: "block" } }}>
+              <Box sx={{ display: { xs: "none", lg: "flex" }, height: "100%" }}>
                 {NAV_LINKS.map((item) => (
                   <Button
-                    key={item}
-                    component={Link}
-                    href={
-                      item === "Home"
-                        ? "/"
-                        : "/" + item.toLowerCase().replaceAll(" ", "-")
-                    }
+                    key={item.route}
+                    component={item.hasChild ? "div" : Link}
+                    href={item.route}
+                    onClick={item.hasChild ? handleMenuClick : undefined}
+                    endIcon={item.hasChild ? <ExpandMore /> : null}
                     sx={{
                       fontWeight: 600,
                       mx: 1,
                       color: "text.primary",
                     }}
                   >
-                    {item}
+                    {item.label}
                   </Button>
                 ))}
+
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  anchorOrigin={{
+                    vertical: 70,
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  MenuListProps={{
+                    sx: {
+                      p: 0,
+                    },
+                  }}
+                >
+                  <Grid
+                    container
+                    maxWidth={1000}
+                    sx={{
+                      p: 1,
+                    }}
+                    spacing={2}
+                  >
+                    {SERVICES.map((service) => (
+                      <Grid item key={service.id} md={4}>
+                        <MenuItem
+                          onClick={handleMenuClose}
+                          sx={{
+                            borderRadius: 1,
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                backgroundColor: alpha(
+                                  theme.palette.secondary.main,
+                                  0.3
+                                ),
+
+                                mr: 1,
+                                display: "flex",
+                                justifyContent: "center",
+                                borderRadius: 1,
+                                p: 1.5,
+                              }}
+                            >
+                              <service.Icon
+                                sx={{
+                                  fontSize: 40,
+                                }}
+                              />
+                            </Box>
+
+                            <Box>
+                              <Typography
+                                component="h4"
+                                sx={{ fontWeight: 500 }}
+                              >
+                                {service.name}
+                              </Typography>
+
+                              <Typography
+                                sx={{
+                                  whiteSpace: "normal",
+                                  color: "text.secondary",
+                                }}
+                              >
+                                {service.description.substring(0, 45) + "..."}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </MenuItem>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Menu>
               </Box>
               <Button
                 variant="blue"
@@ -136,7 +236,7 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                   color: "primary.main",
                 }}
               >
-                <Menu />
+                <MenuIcon />
               </IconButton>
             </Toolbar>
           </Container>

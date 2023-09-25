@@ -49,7 +49,7 @@ const Footer = () => {
 
             {NAV_LINKS.map((item) => (
               <Stack
-                key={item}
+                key={item.route}
                 direction="row"
                 alignItems="center"
                 my={2}
@@ -72,13 +72,9 @@ const Footer = () => {
                     textDecoration: "none",
                   }}
                   component={Link}
-                  href={
-                    item === "Home"
-                      ? "/"
-                      : "/" + item.toLowerCase().replaceAll(" ", "-")
-                  }
+                  href={item.route}
                 >
-                  {item}
+                  {item.label}
                 </MuiLink>
               </Stack>
             ))}
