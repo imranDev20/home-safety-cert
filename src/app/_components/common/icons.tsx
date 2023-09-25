@@ -1,0 +1,21 @@
+"use client";
+import { createSvgIcon } from "@mui/material/utils";
+import FlameSvg from "../../../images/icons/flame-blue.svg";
+import BulbSvg from "../../../images/icons/electrical-certificate-blue.svg";
+import ExitSvg from "../../../images/icons/emergency-exit-blue.svg";
+import EnergySvg from "../../../images/icons/energy-performance-blue.svg";
+import FireAlarmSvg from "../../../images/icons/fire-alarm-blue.svg";
+import FireRiskSvg from "../../../images/icons/fire-risk-assessment-blue.svg";
+import HmoSvg from "../../../images/icons/hmo.svg";
+import PassedSvg from "../../../images/icons/passed-blue.svg";
+import PatSvg from "../../../images/icons/pat-test-blue.svg";
+
+export const FlameIcon = createSvgIcon(<FlameSvg />, "Flame");
+export const BulbIcon = createSvgIcon(<BulbSvg />, "Bulb");
+export const ExitIcon = createSvgIcon(<ExitSvg />, "Exit");
+export const EnergyIcon = createSvgIcon(<EnergySvg />, "Energy");
+export const FireAlarmIcon = createSvgIcon(<FireAlarmSvg />, "FireAlarm");
+export const FireRiskIcon = createSvgIcon(<FireRiskSvg />, "FireRisk");
+export const HmoIcon = createSvgIcon(<HmoSvg />, "Hmo");
+export const PassedIcon = createSvgIcon(<PassedSvg />, "Passed");
+export const PatIcon = createSvgIcon(<PatSvg />, "Pat");

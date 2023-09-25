@@ -1,5 +1,17 @@
 import { HiEnvelope, HiMapPin, HiPhone } from "react-icons/hi2";
 import { FaTwitter, FaFacebookF, FaYoutube, FaInstagram } from "react-icons/fa";
+import {
+  BulbIcon,
+  EnergyIcon,
+  ExitIcon,
+  FireAlarmIcon,
+  FireRiskIcon,
+  FlameIcon,
+  HmoIcon,
+  PatIcon,
+} from "@/app/_components/common/icons";
+import { FaMapMarkerAlt, FaRegClock, FaRegEnvelope } from "react-icons/fa";
+import { Faq, Service } from "@/types/misc";
 
 export const DRAWER_WIDTH = 240;
 
@@ -12,34 +24,60 @@ export const SOCIALS = [
   { id: 4, name: "Instagram", icon: FaInstagram, href: "https://facebook.com" },
 ];
 
+const ADDRESS = "London, Great Britain, UK";
+const EMAIL = "hello@homesafetycert.co.uk";
+const PHONE = "020 3488 4929";
+const WORKING_HOURS = "Mon - Fri: 08:00 - 18:00";
+
 export const INFO = {
   address: {
     id: 1,
     type: "text",
-    text: "London, Great Britain, UK",
+    text: ADDRESS,
     icon: HiMapPin,
   },
   email: {
     id: 2,
     type: "link-email",
-    text: "hello@homesafetycert.co.uk",
+    text: EMAIL,
     icon: HiEnvelope,
   },
   phone: {
     id: 3,
     type: "link-phone",
-    text: "020 3488 4929",
+    text: PHONE,
     icon: HiPhone,
   },
   workingHours: {
     id: 3,
     type: "text",
-    text: "Mon - Fri: 08:00 - 18:00",
+    text: WORKING_HOURS,
     icon: HiPhone,
   },
 };
 
-export const FAQS = [
+export const CONTACT_PAGE_INFO = [
+  {
+    id: 1,
+    Icon: FaRegEnvelope,
+    title: "Email Address",
+    info: EMAIL,
+  },
+  {
+    id: 2,
+    Icon: FaMapMarkerAlt,
+    title: "Our Address",
+    info: ADDRESS,
+  },
+  {
+    id: 3,
+    Icon: FaRegClock,
+    title: "Open Hours",
+    info: WORKING_HOURS,
+  },
+];
+
+export const FAQS: Faq[] = [
   {
     id: 1,
     ques: "What safety certifications do you offer?",
@@ -92,9 +130,289 @@ export const FAQS = [
   },
 ];
 
-export const OTHER_PAGES = [
+export const OTHER_PAGES: string[] = [
   "Privacy Policy",
   "Terms & Condition",
   "Acceptable Use Policy",
   "Cookie Policy",
+];
+
+export const SERVICES: Service[] = [
+  {
+    id: 1,
+    name: "Gas Safety Certificate",
+    Icon: FlameIcon,
+    description:
+      "Stay safe and compliant with our gas safety certificate for your home",
+    startingPrice: 60,
+    packages: [
+      "Gas meter",
+      "Pipe work",
+      "Gas Appliance (Boiler, Cooker or Fireplace)",
+      "Boiler service & check-up",
+      "CO alarm & detector",
+      "Cooker installation & leak check",
+      "Boiler",
+    ],
+    detailedPackages: [
+      {
+        name: "Gas meter+Pipe work",
+        price: 60,
+      },
+      {
+        name: "Gas meter+Pipe work+ 1 Gas appliance (Boiler, Cooker or Fireplace)",
+        price: 70,
+      },
+      {
+        name: "Gas meter+Pipe work+ 2 Gas appliance (Boiler, Cooker or Fireplace)",
+        price: 80,
+      },
+      {
+        name: "Gas meter+Pipe work+ 3 Gas appliance (Boiler, Cooker or Fireplace)",
+        price: 90,
+      },
+    ],
+
+    additionalPackage: [
+      {
+        name: "Boiler service & check-up ( Less than 5 years old boilers)",
+        price: 90,
+      },
+      {
+        name: "Boiler service & check‑up ( Less than 10 years old boilers)",
+        price: 130,
+      },
+      {
+        name: "Boiler service & check‑up ( Over 10 years old boilers)",
+        price: 180,
+      },
+      {
+        name: "CO alarm & detector (Battery Powered)- Supply & installation",
+        price: 60,
+      },
+      {
+        name: "CO alarm & detector (Mains powered)- Supply & installation",
+        price: 140,
+      },
+      { name: "Cooker installation & leak check", price: 120 },
+      {
+        name: "Boiler installation (Supply, installation & certification)- Complete Job",
+        price: 0,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Electric Certificate (EICR)",
+    Icon: BulbIcon,
+    description: "Ensure electrical safety with our EICR certification.",
+    startingPrice: 150,
+    packages: [
+      "Studio property",
+      "1 to 5 or more Bedrooms property",
+      "Consumer unit supply",
+      "Consumer unit installation",
+      "Consumer unit certification",
+    ],
+    detailedPackages: [
+      { name: "One Bedroom/Studio property", price: 120 },
+      {
+        name: "Two Bedrooms property",
+        price: 140,
+      },
+      {
+        name: "Three Bedrooms property",
+        price: 160,
+      },
+      {
+        name: "Four Bedrooms property",
+        price: 180,
+      },
+      {
+        name: "Five or more Bedrooms property",
+        price: 200,
+      },
+      {
+        name: "Additional consumer unit at the same address (each)",
+        price: 80,
+      },
+    ],
+    additionalPackage: [
+      {
+        name: "Consumer Unit - Supply, Installation & Certification ( Complete Job)",
+        price: 0,
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "EPC",
+    Icon: EnergyIcon,
+    description:
+      "Measure your property's energy efficiency with our EPC certification",
+    startingPrice: 70,
+    packages: ["Studio property", "1 to 5 or more bedroom property"],
+    detailedPackages: [
+      { name: "One Bedroom/Studio property", price: 60 },
+      { name: "Two Bedrooms property", price: 70 },
+      { name: "Three Bedrooms property", price: 80 },
+      { name: "Four Bedrooms property", price: 90 },
+      {
+        name: "Five or more Bedrooms property",
+        price: 100,
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "PAT",
+    Icon: PatIcon,
+    description:
+      "Get peace of mind with our reliable PAT testing certification.",
+    startingPrice: 80,
+    packages: ["Testing", "Certifications"],
+    detailedPackages: [
+      { name: "PAT testing & Certification (1-10 appliances)", price: 80 },
+      { name: "PAT testing & Certification (1-15 appliances)", price: 100 },
+      { name: "PAT testing & Certification (1-20 appliances)", price: 120 },
+    ],
+  },
+  {
+    id: 5,
+    name: "Emergency Light Certification",
+    Icon: ExitIcon,
+    description: "Expert certification for fully functional emergency lights.",
+    startingPrice: 130,
+    packages: ["Supply", "Installation", "Certification"],
+    detailedPackages: [
+      {
+        name: "Emergency Light Certification (up to 8 units)",
+        price: 130,
+      },
+      {
+        name: "Emergency Light Certification (up to 12 units)",
+        price: 170,
+      },
+    ],
+    additionalPackage: [
+      {
+        name: "Emergency Light - Installation, Supply & installation (each unit)",
+        price: 100,
+      },
+    ],
+  },
+  {
+    id: 6,
+    name: "Fire Alarm Certificate",
+    Icon: FireAlarmIcon,
+    description: "Get reliable certification for your fire alarm system.",
+    startingPrice: 130,
+    packages: [
+      "Certification",
+      "Smoke detector",
+      "Heat detector",
+      "Fire Alarm system",
+    ],
+    detailedPackages: [
+      { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
+      { name: "Fire Alarm Certification (up to 12 units)", price: 170 },
+    ],
+
+    additionalPackage: [
+      {
+        name: "Smoke detector (Battery Powered)- Supply & installation (each unit)",
+        price: 60,
+      },
+      {
+        name: "Heat detector (Battery Powered)- Supply & installation (each unit)",
+        price: 60,
+      },
+      {
+        name: "Smoke detector detector (Mains powered)- Supply & installation (each unit)",
+        price: 90,
+      },
+      {
+        name: "Heat detector detector (Mains powered)- Supply & installation (each unit)",
+        price: 90,
+      },
+      {
+        name: "Fire Alarm system - Supply, Installation & Certification (HMO Properties)",
+        price: 0,
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Fire Risk Assessment",
+    Icon: FireRiskIcon,
+    description: "Minimize fire risks with our expert assessments.",
+    startingPrice: 250,
+    packages: [
+      "Certification",
+      "Smoke detector",
+      "Heat detector",
+      "Fire Alarm system",
+    ],
+    detailedPackages: [
+      { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
+      {
+        name: "Fire Alarm Certification (up to 12 units)",
+        price: 170,
+      },
+    ],
+    additionalPackage: [
+      {
+        name: "Smoke detector (Battery Powered)- Supply & installation (each unit)",
+        price: 60,
+      },
+      {
+        name: "Heat detector (Battery Powered)- Supply & installation (each unit)",
+        price: 60,
+      },
+      {
+        name: "Smoke detector detector (Mains powered)- Supply & installation (each unit)",
+        price: 90,
+      },
+      {
+        name: "Heat detector detector (Mains powered)- Supply & installation (each unit)",
+        price: 90,
+      },
+      {
+        name: "Fire Alarm system - Supply, Installation & Certification (HMO Properties)",
+        price: 0,
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: "HMO",
+    Icon: HmoIcon,
+    description: "Comprehensive HMO inspections for maximum safety.",
+    startingPrice: 0,
+    packages: [
+      "Gas Safety Certificate",
+      "Electric Certificate",
+      "PAT Certificate",
+      "EPC Certificate",
+      "Emergency Light Certification",
+      "Fire Alarm Certification",
+      "Fire Risk Assessment",
+    ],
+
+    detailedPackages: [
+      { name: "Gas Safety Certificate (2 Gas Appliances)", price: 80 },
+      {
+        name: "Electric Certificate (4/5 Bedrooms)",
+        price: 180,
+      },
+      {
+        name: "PAT Certificate (10 Appliances)",
+        price: 80,
+      },
+      { name: "EPC Certificate (4/5 Bedrooms)", price: 90 },
+      { name: "Emergency Light Certification (up to 8 units)", price: 130 },
+      { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
+      { name: "Fire Risk Assessment (4/6 Bedrooms)", price: 350 },
+    ],
+  },
 ];

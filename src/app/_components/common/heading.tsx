@@ -1,3 +1,4 @@
+"use client";
 import { HeadingProps } from "@/types/props";
 import { Typography } from "@mui/material";
 
