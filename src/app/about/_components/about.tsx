@@ -83,7 +83,7 @@ const About = () => {
               >
                 <Phone
                   sx={{
-                    color: "black.main",
+                    color: "text.primary",
                   }}
                 />
               </Box>

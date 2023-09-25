@@ -41,7 +41,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           py: 2,
           fontSize: "20px",
           fontWeight: 600,
-          color: "black.main",
+          color: "text.primary",
           zIndex: 20,
           "&::before": {
             position: "absolute",

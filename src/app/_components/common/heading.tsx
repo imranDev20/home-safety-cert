@@ -6,7 +6,12 @@ const Heading = ({ children, headingType, ...props }: HeadingProps) => {
   return (
     <Typography
       component={headingType ? headingType : "h2"}
-      sx={{ fontSize: 30, color: "black.main", fontWeight: 600, ...props?.sx }}
+      sx={{
+        fontSize: 30,
+        color: "text.primary",
+        fontWeight: 600,
+        ...props?.sx,
+      }}
     >
       {children}
     </Typography>
