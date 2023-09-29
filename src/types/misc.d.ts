@@ -11,6 +11,7 @@ export type Service = {
   name: string;
   Icon: SvgIconComponent;
   description: string;
+  slug: string;
   startingPrice: number;
   packages: string[];
 

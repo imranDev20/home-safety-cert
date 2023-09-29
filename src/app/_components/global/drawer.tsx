@@ -12,13 +12,13 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  MenuItem,
   Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
-  Menu,
   Grid,
+  Paper,
+  Link as MuiLink,
 } from "@mui/material";
 import { alpha } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
@@ -43,19 +43,8 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleMenuClick = (event: MouseEvent<HTMLElement>) => {
-    if (anchorEl !== event.currentTarget) {
-      setAnchorEl(event.currentTarget);
-    }
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
   };
 
   const drawer = (
@@ -89,7 +78,6 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
           sx={{
             backgroundColor: "white",
             boxShadow: "0 0 20px 0 rgba(6, 22, 58, 0.11)",
-            clipPath: "inset(0 0 -25px 0)",
           }}
           position="sticky"
         >
@@ -112,109 +100,113 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
               >
                 Home Safety Cert
               </Typography>
+
               <Box sx={{ display: { xs: "none", lg: "flex" }, height: "100%" }}>
                 {NAV_LINKS.map((item) => (
-                  <Button
+                  <Box
                     key={item.route}
-                    component={item.hasChild ? "div" : Link}
-                    href={item.route}
-                    onClick={item.hasChild ? handleMenuClick : undefined}
-                    endIcon={item.hasChild ? <ExpandMore /> : null}
                     sx={{
-                      fontWeight: 600,
-                      mx: 1,
-                      color: "text.primary",
+                      display: "flex",
+                      alignItems: "stretch",
+                      position: "relative",
+                      ":hover": {
+                        ".MuiPaper-root": {
+                          maxHeight: "1000px",
+                          opacity: 1,
+                          bottom: 0,
+                        },
+                      },
                     }}
                   >
-                    {item.label}
-                  </Button>
+                    <Button
+                      component={Link}
+                      href={item.route}
+                      endIcon={item.hasChild ? <ExpandMore /> : null}
+                      sx={{
+                        fontWeight: 600,
+                        mx: 1,
+                        color: "text.primary",
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+
+                    {item.hasChild && (
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          position: "absolute",
+                          left: "50%",
+                          bottom: -20,
+                          p: 2,
+                          width: "1000px",
+                          transform: "translateX(-50%) translateY(100%)",
+                          boxShadow: "0 0 20px 0 rgba(6, 22, 58, 0.11)",
+                          maxHeight: 0,
+                          overflow: "hidden",
+                          transition: "0.3s all ease-in-out",
+                          opacity: 0,
+                        }}
+                      >
+                        <Grid container spacing={2}>
+                          {SERVICES.map((service) => (
+                            <Grid key={service.id} item sm={4}>
+                              <MuiLink
+                                component={Link}
+                                href={"/services/" + service.slug}
+                                underline="none"
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  cursor: "pointer",
+                                  p: 1.5,
+                                  borderRadius: 1,
+                                  ":hover": {
+                                    backgroundColor: "#F7F7F7",
+                                    transition: "250ms ease",
+                                  },
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    backgroundColor: alpha(
+                                      theme.palette.secondary.main,
+                                      0.2
+                                    ),
+                                    p: 1.3,
+                                    mr: 2,
+                                    borderRadius: 1,
+                                  }}
+                                >
+                                  <service.Icon sx={{ fontSize: 40 }} />
+                                </Box>
+                                <Box>
+                                  <Typography
+                                    component="h3"
+                                    sx={{
+                                      fontWeight: 500,
+                                    }}
+                                  >
+                                    {service.name}
+                                  </Typography>
+                                  <Typography
+                                    sx={{
+                                      color: "text.secondary",
+                                    }}
+                                  >
+                                    {service.description.substring(0, 40)}
+                                  </Typography>
+                                </Box>
+                              </MuiLink>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Paper>
+                    )}
+                  </Box>
                 ))}
-
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                  anchorOrigin={{
-                    vertical: 70,
-                    horizontal: "center",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                  }}
-                  MenuListProps={{
-                    sx: {
-                      p: 0,
-                    },
-                  }}
-                >
-                  <Grid
-                    container
-                    maxWidth={1000}
-                    sx={{
-                      p: 1,
-                    }}
-                    spacing={2}
-                  >
-                    {SERVICES.map((service) => (
-                      <Grid item key={service.id} md={4}>
-                        <MenuItem
-                          onClick={handleMenuClose}
-                          sx={{
-                            borderRadius: 1,
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                backgroundColor: alpha(
-                                  theme.palette.secondary.main,
-                                  0.3
-                                ),
-
-                                mr: 1,
-                                display: "flex",
-                                justifyContent: "center",
-                                borderRadius: 1,
-                                p: 1.5,
-                              }}
-                            >
-                              <service.Icon
-                                sx={{
-                                  fontSize: 40,
-                                }}
-                              />
-                            </Box>
-
-                            <Box>
-                              <Typography
-                                component="h4"
-                                sx={{ fontWeight: 500 }}
-                              >
-                                {service.name}
-                              </Typography>
-
-                              <Typography
-                                sx={{
-                                  whiteSpace: "normal",
-                                  color: "text.secondary",
-                                }}
-                              >
-                                {service.description.substring(0, 45) + "..."}
-                              </Typography>
-                            </Box>
-                          </Box>
-                        </MenuItem>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Menu>
               </Box>
+
               <Button
                 variant="blue"
                 color="primary"

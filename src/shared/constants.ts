@@ -164,6 +164,7 @@ export const SERVICES: Service[] = [
     id: 1,
     name: "Gas Safety Certificate",
     Icon: FlameIcon,
+    slug: "gas-safety-certificate",
     description:
       "Stay safe and compliant with our gas safety certificate for your home",
     startingPrice: 60,
@@ -227,6 +228,7 @@ export const SERVICES: Service[] = [
     id: 2,
     name: "Electric Certificate (EICR)",
     Icon: BulbIcon,
+    slug: "gas-safety-certificate",
     description: "Ensure electrical safety with our EICR certification.",
     startingPrice: 150,
     packages: [
@@ -270,6 +272,7 @@ export const SERVICES: Service[] = [
     id: 3,
     name: "EPC",
     Icon: EnergyIcon,
+    slug: "gas-safety-certificate",
     description:
       "Measure your property's energy efficiency with our EPC certification",
     startingPrice: 70,
@@ -289,6 +292,7 @@ export const SERVICES: Service[] = [
     id: 4,
     name: "PAT",
     Icon: PatIcon,
+    slug: "gas-safety-certificate",
     description:
       "Get peace of mind with our reliable PAT testing certification.",
     startingPrice: 80,
@@ -303,6 +307,7 @@ export const SERVICES: Service[] = [
     id: 5,
     name: "Emergency Light Certification",
     Icon: ExitIcon,
+    slug: "gas-safety-certificate",
     description: "Expert certification for fully functional emergency lights.",
     startingPrice: 130,
     packages: ["Supply", "Installation", "Certification"],
@@ -327,6 +332,7 @@ export const SERVICES: Service[] = [
     id: 6,
     name: "Fire Alarm Certificate",
     Icon: FireAlarmIcon,
+    slug: "gas-safety-certificate",
     description: "Get reliable certification for your fire alarm system.",
     startingPrice: 130,
     packages: [
@@ -367,6 +373,7 @@ export const SERVICES: Service[] = [
     id: 7,
     name: "Fire Risk Assessment",
     Icon: FireRiskIcon,
+    slug: "gas-safety-certificate",
     description: "Minimize fire risks with our expert assessments.",
     startingPrice: 250,
     packages: [
@@ -409,6 +416,7 @@ export const SERVICES: Service[] = [
     id: 8,
     name: "HMO",
     Icon: HmoIcon,
+    slug: "gas-safety-certificate",
     description: "Comprehensive HMO inspections for maximum safety.",
     startingPrice: 0,
     packages: [
