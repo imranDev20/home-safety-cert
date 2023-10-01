@@ -32,15 +32,29 @@ const About = () => {
               Safety Certifications
             </Heading>
 
-            <Paragraph>
-              At Home Safety Cert, we specialize in landlord safety
-              certifications. As per legal requirements, landlords must obtain
-              various certificates to rent or sell a property. The majority of
-              these certificates need annual revalidation. Managing these
-              certifications has become increasingly challenging for landlords
-              and estate agents due to complex laws and timelines. Our goal is
-              to alleviate the burden of property certifications, providing you
-              with peace of mind.
+            <Paragraph sx={{ my: 2 }}>
+              We are a team of professionals focused on providing landlord
+              safety certifications in a hassle-free manner. Our services
+              include Gas Safety Certificates, Electrical certification, Energy
+              Performance Certificates, PAT testing, Fire Alarm Certificates,
+              Fire Risk Assessments, and more. Our vetted experts have extensive
+              experience in their respective fields.
+            </Paragraph>
+
+            <Paragraph sx={{ my: 2 }}>
+              Our customer-centric approach includes a rating system for
+              tradespeople and a general safety check for potential hazards
+              during each property visit. Our reminder service sends
+              notifications when services are due, saving you time and hassle.
+              We are constantly updating our system to make it easier for
+              landlords and estate agents.
+            </Paragraph>
+            <Paragraph sx={{ my: 2 }}>
+              We prioritize tenant safety and insurance claims, ensuring
+              complete compliance and safety for your properties. Our services
+              are hassle-free and require no contract or direct debit setup. We
+              only charge when you agree to our services. Choose us for reliable
+              and stress-free certification services.
             </Paragraph>
 
             <Paragraph

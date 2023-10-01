@@ -25,16 +25,6 @@ declare module "@mui/material/styles" {
   }
 }
 
-// declare module "@mui/material/styles" {
-//   interface PaletteColor {
-//     primary?: string;
-//   }
-
-//   interface SimplePaletteColorOptions {
-//     primary?: string;
-//   }
-// }
-
 export const theme = createTheme({
   typography: {
     fontFamily: [
@@ -112,7 +102,6 @@ export const theme = createTheme({
     },
     background: {
       default: "white",
-      // default: "#f7f7f7",
       paper: "#fff",
     },
     divider: "#ddd",
