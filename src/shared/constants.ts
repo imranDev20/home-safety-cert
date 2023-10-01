@@ -168,15 +168,7 @@ export const SERVICES: Service[] = [
     description:
       "Stay safe and compliant with our gas safety certificate for your home",
     startingPrice: 60,
-    packages: [
-      "Gas meter",
-      "Pipe work",
-      "Gas Appliance (Boiler, Cooker or Fireplace)",
-      "Boiler service & check-up",
-      "CO alarm & detector",
-      "Cooker installation & leak check",
-      "Boiler",
-    ],
+
     detailedPackages: [
       {
         name: "Gas meter+Pipe work",
@@ -231,13 +223,7 @@ export const SERVICES: Service[] = [
     slug: "gas-safety-certificate",
     description: "Ensure electrical safety with our EICR certification.",
     startingPrice: 150,
-    packages: [
-      "Studio property",
-      "1 to 5 or more Bedrooms property",
-      "Consumer unit supply",
-      "Consumer unit installation",
-      "Consumer unit certification",
-    ],
+
     detailedPackages: [
       { name: "One Bedroom/Studio property", price: 120 },
       {
@@ -276,7 +262,7 @@ export const SERVICES: Service[] = [
     description:
       "Measure your property's energy efficiency with our EPC certification",
     startingPrice: 70,
-    packages: ["Studio property", "1 to 5 or more bedroom property"],
+
     detailedPackages: [
       { name: "One Bedroom/Studio property", price: 60 },
       { name: "Two Bedrooms property", price: 70 },
@@ -296,7 +282,7 @@ export const SERVICES: Service[] = [
     description:
       "Get peace of mind with our reliable PAT testing certification.",
     startingPrice: 80,
-    packages: ["Testing", "Certifications"],
+
     detailedPackages: [
       { name: "PAT testing & Certification (1-10 appliances)", price: 80 },
       { name: "PAT testing & Certification (1-15 appliances)", price: 100 },
@@ -310,7 +296,7 @@ export const SERVICES: Service[] = [
     slug: "gas-safety-certificate",
     description: "Expert certification for fully functional emergency lights.",
     startingPrice: 130,
-    packages: ["Supply", "Installation", "Certification"],
+
     detailedPackages: [
       {
         name: "Emergency Light Certification (up to 8 units)",
@@ -335,12 +321,7 @@ export const SERVICES: Service[] = [
     slug: "gas-safety-certificate",
     description: "Get reliable certification for your fire alarm system.",
     startingPrice: 130,
-    packages: [
-      "Certification",
-      "Smoke detector",
-      "Heat detector",
-      "Fire Alarm system",
-    ],
+
     detailedPackages: [
       { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
       { name: "Fire Alarm Certification (up to 12 units)", price: 170 },
@@ -376,12 +357,7 @@ export const SERVICES: Service[] = [
     slug: "gas-safety-certificate",
     description: "Minimize fire risks with our expert assessments.",
     startingPrice: 250,
-    packages: [
-      "Certification",
-      "Smoke detector",
-      "Heat detector",
-      "Fire Alarm system",
-    ],
+
     detailedPackages: [
       { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
       {
@@ -419,15 +395,6 @@ export const SERVICES: Service[] = [
     slug: "gas-safety-certificate",
     description: "Comprehensive HMO inspections for maximum safety.",
     startingPrice: 0,
-    packages: [
-      "Gas Safety Certificate",
-      "Electric Certificate",
-      "PAT Certificate",
-      "EPC Certificate",
-      "Emergency Light Certification",
-      "Fire Alarm Certification",
-      "Fire Risk Assessment",
-    ],
 
     detailedPackages: [
       { name: "Gas Safety Certificate (2 Gas Appliances)", price: 80 },

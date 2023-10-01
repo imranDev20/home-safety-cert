@@ -13,7 +13,6 @@ export type Service = {
   description: string;
   slug: string;
   startingPrice: number;
-  packages: string[];
 
   detailedPackages: {
     name: string;
