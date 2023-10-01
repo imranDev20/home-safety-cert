@@ -9,14 +9,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from "pure-react-carousel";
 import { CgArrowLongRight } from "react-icons/cg";
 import Heading from "@/app/_components/common/heading";
 import { SERVICES } from "@/shared/constants";
@@ -38,19 +30,19 @@ const Pricing = () => {
         bgcolor: "background.main",
         py: 10,
         mt: 10,
+        backgroundImage: "url('background.svg')",
       }}
     >
       <Container>
         <Heading sx={{ textAlign: "center", mb: 5 }}>Our Pricing Plans</Heading>
 
-        <Masonry columns={2} spacing={2}>
+        <Masonry columns={3} spacing={3}>
           {SERVICES.map((service, index) => {
             const {
               Icon,
               id,
               startingPrice,
               name,
-              description,
               detailedPackages,
               additionalPackage,
             } = service;
@@ -77,12 +69,13 @@ const Pricing = () => {
                 }}
               >
                 <CardHeader
-                  sx={{ backgroundColor: "#f7f7f7" }}
+                  sx={{ backgroundColor: "#f7f7f7", transition: "250ms all" }}
                   titleTypographyProps={{
                     sx: {
                       fontSize: 20,
                       textAlign: "center",
                       color: "text.primary",
+                      transition: "250ms all",
                     },
                   }}
                   title={name}
