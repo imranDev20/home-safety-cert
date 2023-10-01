@@ -109,11 +109,16 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                       display: "flex",
                       alignItems: "stretch",
                       position: "relative",
-                      ":hover": {
+
+                      "&:hover": {
                         ".MuiPaper-root": {
                           maxHeight: "1000px",
                           opacity: 1,
                           bottom: 0,
+                          pointerEvents: "auto",
+                        },
+                        ".mui-1a1tg5j-MuiSvgIcon-root": {
+                          transform: "rotate(-180deg)",
                         },
                       },
                     }}
@@ -121,7 +126,15 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                     <Button
                       component={Link}
                       href={item.route}
-                      endIcon={item.hasChild ? <ExpandMore /> : null}
+                      endIcon={
+                        item.hasChild ? (
+                          <ExpandMore
+                            sx={{
+                              transition: "250ms all ease-in-out",
+                            }}
+                          />
+                        ) : null
+                      }
                       sx={{
                         fontWeight: 600,
                         mx: 1,
@@ -146,9 +159,10 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                           overflow: "hidden",
                           transition: "0.3s all ease-in-out",
                           opacity: 0,
+                          pointerEvents: "none",
                         }}
                       >
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                           {SERVICES.map((service) => (
                             <Grid key={service.id} item sm={4}>
                               <MuiLink

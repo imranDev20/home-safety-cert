@@ -28,13 +28,7 @@ const Center = ({ children, sx }: CenterProps) => {
 
 export default function PricingTable() {
   return (
-    <Box
-      component="section"
-      sx={{
-        backgroundColor: "#F7F7F7",
-        py: 10,
-      }}
-    >
+    <>
       <Container>
         {SERVICES.map((item) => {
           const { name, Icon, detailedPackages, additionalPackage, id } = item;
@@ -161,6 +155,6 @@ export default function PricingTable() {
           );
         })}
       </Container>
-    </Box>
+    </>
   );
 }

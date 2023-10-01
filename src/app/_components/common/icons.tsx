@@ -9,6 +9,7 @@ import FireRiskSvg from "../../../images/icons/fire-risk-assessment-blue.svg";
 import HmoSvg from "../../../images/icons/hmo.svg";
 import PassedSvg from "../../../images/icons/passed-blue.svg";
 import PatSvg from "../../../images/icons/pat-test-blue.svg";
+import OpenSvg from "../../../images/icons/open.svg";
 
 export const FlameIcon = createSvgIcon(<FlameSvg />, "Flame");
 export const BulbIcon = createSvgIcon(<BulbSvg />, "Bulb");
@@ -19,3 +20,4 @@ export const FireRiskIcon = createSvgIcon(<FireRiskSvg />, "FireRisk");
 export const HmoIcon = createSvgIcon(<HmoSvg />, "Hmo");
 export const PassedIcon = createSvgIcon(<PassedSvg />, "Passed");
 export const PatIcon = createSvgIcon(<PatSvg />, "Pat");
+export const OpenIcon = createSvgIcon(<OpenSvg />, "Open");
