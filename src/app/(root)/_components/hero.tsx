@@ -44,96 +44,98 @@ const Hero = () => {
       maxWidth={false}
       disableGutters
       sx={{
-        backgroundColor: "#EEEFEF",
         position: "relative",
         ".focusRing___1airF.carousel__slide-focus-ring": {
           outline: "none!important",
         },
       }}
     >
-      <CarouselProvider
-        totalSlides={heroSlides.length}
-        naturalSlideHeight={10}
-        naturalSlideWidth={100}
-        dragEnabled={false}
+      <Box
+        sx={{
+          position: "relative",
+        }}
       >
-        <Slider moveThreshold={0.3} classNameAnimation={styles.fadeAnimation}>
-          {heroSlides.map((item, index) => {
-            return <HeroSlide key={item.id} index={index} item={item} />;
-          })}
-        </Slider>
-        <Box
-          sx={{
-            position: "absolute",
-            zIndex: 3,
-            bottom: 50,
-            left: "50%",
-            "& .carousel__dot": {
-              backgroundColor: "transparent",
-              border: "1px solid",
-              borderColor: "primary.main",
-              width: 17,
-              height: 17,
-              mx: 0.5,
-              mb: 3,
-              borderRadius: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              p: 0.1,
-            },
-
-            "& .carousel__dot--selected": {
-              "& span": {
-                display: "block",
-                width: 10,
-                height: 10,
-                backgroundColor: "primary.main",
-                borderRadius: "50%",
+        <CarouselProvider
+          totalSlides={heroSlides.length}
+          naturalSlideHeight={10}
+          naturalSlideWidth={100}
+          dragEnabled={false}
+          isPlaying
+          interval={5000}
+        >
+          <Slider moveThreshold={0.3} classNameAnimation={styles.fadeAnimation}>
+            {heroSlides.map((item, index) => {
+              return <HeroSlide key={item.id} index={index} item={item} />;
+            })}
+          </Slider>
+          <Box
+            sx={{
+              position: "absolute",
+              zIndex: 3,
+              bottom: 50,
+              left: "50%",
+              "& .carousel__dot": {
+                backgroundColor: "#B4B3B5",
+                border: "none",
+                width: 35,
+                height: 5,
+                mx: 1,
+                mb: 3,
+                borderRadius: 3,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                p: 0.1,
+                transition: "250ms all",
               },
-            },
-          }}
-        >
-          <DotGroup
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          />
-        </Box>
 
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            transform: "translateY(-50%)",
-            display: { xs: "none", md: "flex" },
-            justifyContent: "space-between",
-            width: "100%",
-            px: 5,
-            "& button": {
-              backgroundColor: "transparent",
-              border: "none",
-            },
-          }}
-        >
-          <ButtonBack>
-            <ArrowBackIosNewRounded
-              sx={{
-                fontSize: 28,
+              "& .carousel__dot--selected": {
+                backgroundColor: "primary.main",
+              },
+            }}
+          >
+            <DotGroup
+              style={{
+                display: "flex",
+                justifyContent: "center",
               }}
             />
-          </ButtonBack>
-          <ButtonNext>
-            <ArrowForwardIosRounded
-              sx={{
-                fontSize: 28,
-              }}
-            />
-          </ButtonNext>
-        </Box>
-      </CarouselProvider>
+          </Box>
+
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: 0,
+              transform: "translateY(-50%)",
+              display: { xs: "none", lg: "flex" },
+              justifyContent: "space-between",
+              width: "100%",
+              px: 5,
+              "& button": {
+                backgroundColor: "transparent",
+                border: "none",
+              },
+            }}
+          >
+            <ButtonBack>
+              <ArrowBackIosNewRounded
+                sx={{
+                  fontSize: 28,
+                }}
+              />
+            </ButtonBack>
+            <ButtonNext>
+              <ArrowForwardIosRounded
+                sx={{
+                  fontSize: 28,
+                }}
+              />
+            </ButtonNext>
+          </Box>
+        </CarouselProvider>
+      </Box>
+
       <HeroInfos />
     </Container>
   );

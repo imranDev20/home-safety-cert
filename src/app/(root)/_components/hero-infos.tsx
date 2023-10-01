@@ -32,28 +32,29 @@ const HeroInfos = () => {
     <Box
       sx={{
         width: "100%",
-        position: "absolute",
+        position: { xs: "static", lg: "absolute" },
         left: 0,
         bottom: 0,
         zIndex: 1,
-        transform: "translateY(50%)",
+        transform: { xs: "translateY(0%)", lg: "translateY(50%)" },
       }}
     >
       <Grid container>
         <Grid
           item
-          md={10}
+          lg={10}
+          xs={12}
           display="flex"
           justifyContent="flex-end"
           sx={{
             backgroundColor: "primary.main",
-            borderTopRightRadius: { xs: 0, sm: 100 },
-            borderBottomRightRadius: { xs: 0, sm: 100 },
+            borderTopRightRadius: { xs: 0, lg: 100 },
+            borderBottomRightRadius: { xs: 0, lg: 100 },
           }}
         >
           <Box
             sx={{
-              maxWidth: 1050,
+              maxWidth: { xs: "100%", lg: 1050 },
               width: "100%",
               py: 4,
               pr: 6,
@@ -110,7 +111,6 @@ const HeroInfos = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid item md={2}></Grid>
       </Grid>
     </Box>
   );
