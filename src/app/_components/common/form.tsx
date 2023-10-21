@@ -7,6 +7,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import PhoneInput from "react-phone-number-input/react-hook-form-input";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import PhoneNumberInput from "./phone-number-input";
+import { isValid } from "postcode";
 
 import {
   BsChatSquareQuote,
@@ -147,6 +148,9 @@ export default function Form() {
           control={control}
           rules={{
             required: "Zip code can't be empty",
+            validate: (value) => {
+              return isValid(value) || "Not a valid British post code";
+            },
           }}
           render={({ field }) => (
             <TextField

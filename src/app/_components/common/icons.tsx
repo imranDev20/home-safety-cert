@@ -11,6 +11,11 @@ import PassedSvg from "../../../images/icons/passed-blue.svg";
 import PatSvg from "../../../images/icons/pat-test-blue.svg";
 import OpenSvg from "../../../images/icons/open.svg";
 
+import BookingSvg from "@/images/steps/booking.svg";
+import CalendarSvg from "@/images/steps/calendar.svg";
+import CertificateSvg from "@/images/steps/certificate.svg";
+import DoorSvg from "@/images/steps/door.svg";
+
 export const FlameIcon = createSvgIcon(<FlameSvg />, "Flame");
 export const BulbIcon = createSvgIcon(<BulbSvg />, "Bulb");
 export const ExitIcon = createSvgIcon(<ExitSvg />, "Exit");
@@ -21,3 +26,7 @@ export const HmoIcon = createSvgIcon(<HmoSvg />, "Hmo");
 export const PassedIcon = createSvgIcon(<PassedSvg />, "Passed");
 export const PatIcon = createSvgIcon(<PatSvg />, "Pat");
 export const OpenIcon = createSvgIcon(<OpenSvg />, "Open");
+export const BookingIcon = createSvgIcon(<BookingSvg />, "Booking");
+export const CalendarIcon = createSvgIcon(<CalendarSvg />, "Calendar");
+export const CertificateIcon = createSvgIcon(<CertificateSvg />, "Certificate");
+export const DoorIcon = createSvgIcon(<DoorSvg />, "Door");

@@ -105,7 +105,7 @@ const Reviews = () => {
                   fontWeight: 600,
                 }}
               >
-                Andy Moore
+                {review.name}
                 <Box
                   component="span"
                   sx={{
