@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import Reviews from "./reviews";
 import Form from "@/app/contact/_components/form";
 
-const Contact = ({ isPage }) => {
+const Contact = ({ isPage }: { isPage: boolean }) => {
   const theme = useTheme();
   return (
     <Container
@@ -88,23 +88,8 @@ const Contact = ({ isPage }) => {
               <Typography component="h2" variant="h4">
                 Get in Touch with Us
               </Typography>
-              <Typography
-                paragraph
-                sx={{
-                  ...theme.typography.body2,
-                  my: 3,
-                  maxWidth: "800px",
-                  mx: "auto",
-                  color: "black",
-                }}
-              >
-                Looking to get in touch? We'd love to hear from you! Contact us
-                today and let us help you with all of your certification needs.
-                Our expert team is ready to provide excellent service and answer
-                any questions you may have.
-              </Typography>
 
-              {/* <Form /> */}
+              <Form />
             </Box>
           </Box>
         </Grid>
