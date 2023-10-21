@@ -14,7 +14,7 @@ import Heading from "../_components/common/heading";
 import Paragraph from "../_components/common/paragraph";
 import { CONTACT_PAGE_INFO, SOCIALS } from "@/shared/constants";
 import Link from "next/link";
-import Form from "./_components/form";
+import Form from "../_components/common/form";
 
 export default function ContactPage() {
   return (

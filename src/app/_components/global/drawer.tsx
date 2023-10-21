@@ -28,6 +28,7 @@ import Link from "next/link";
 
 import { DrawerAppBarProps, HideOnScrollProps } from "@/types/props";
 import { DRAWER_WIDTH, NAV_LINKS, SERVICES } from "@/shared/constants";
+import { usePathname } from "next/navigation";
 
 function HideOnScroll({ children }: HideOnScrollProps) {
   const trigger = useScrollTrigger();
@@ -42,6 +43,7 @@ function HideOnScroll({ children }: HideOnScrollProps) {
 const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
+  const pathname = usePathname();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -138,7 +140,10 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                       sx={{
                         fontWeight: 600,
                         mx: 1,
-                        color: "text.primary",
+                        color:
+                          pathname === item.route
+                            ? "secondary.main"
+                            : "text.primary",
                       }}
                     >
                       {item.label}

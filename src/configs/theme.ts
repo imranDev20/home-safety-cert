@@ -1,5 +1,6 @@
 import { Jost } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
+import { grey } from "@mui/material/colors";
 
 const jost = Jost({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -95,6 +96,10 @@ export const theme = createTheme({
       main: "#2196f3",
       dark: "#1769aa",
       contrastText: "#fff",
+    },
+    grey: {
+      "300": grey[300],
+      "400": grey[400],
     },
     text: {
       primary: "#253238",
