@@ -1,3 +1,4 @@
+"use client";
 import { ErrorMessage } from "@hookform/error-message";
 import { FormHelperText } from "@mui/material";
 import { FieldErrors } from "react-hook-form";

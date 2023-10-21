@@ -133,7 +133,7 @@ export default function HeroSlide({ index, item }: any) {
 
         <Image
           src={item.image}
-          alt={item.title}
+          alt={item.title || "Hero Image"}
           loading="eager"
           fill
           style={{

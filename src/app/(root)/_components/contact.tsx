@@ -2,7 +2,7 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Reviews from "./reviews";
-import Form from "@/app/contact/_components/form";
+import Form from "@/app/_components/common/form";
 
 const Contact = ({ isPage }: { isPage: boolean }) => {
   const theme = useTheme();

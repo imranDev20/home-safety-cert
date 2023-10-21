@@ -2,8 +2,12 @@
 import HookFormError from "@/app/_components/common/hook-form-error";
 import { ArrowCircleRightRounded } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Button, Grid, InputAdornment, TextField } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Grid, InputAdornment, TextField } from "@mui/material";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-number-input/react-hook-form-input";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import PhoneNumberInput from "./phone-number-input";
+
 import {
   BsChatSquareQuote,
   BsEnvelope,
@@ -12,12 +16,20 @@ import {
   BsSignpostSplit,
 } from "react-icons/bs";
 
+type ContactFormInput = {
+  name: string;
+  email: string;
+  phone: string;
+  zipCode: string;
+  message: string;
+};
+
 export default function Form() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ContactFormInput>({
     defaultValues: {
       name: "",
       email: "",
@@ -27,7 +39,9 @@ export default function Form() {
     },
   });
 
-  const onFormSubmit = async () => {};
+  const onFormSubmit: SubmitHandler<ContactFormInput> = async (data) => {
+    console.log(data);
+  };
 
   return (
     <Grid
@@ -46,8 +60,12 @@ export default function Form() {
           control={control}
           rules={{
             required: "Name can't be empty",
+            pattern: {
+              value: /^[A-Za-z'-]+$/,
+              message: "Not a valid human name",
+            },
           }}
-          render={(field) => (
+          render={({ field }) => (
             <TextField
               {...field}
               required
@@ -67,29 +85,30 @@ export default function Form() {
         <HookFormError name="name" errors={errors} />
       </Grid>
       <Grid item md={6} xs={12}>
-        <Controller
+        <PhoneInput
           name="phone"
           control={control}
-          rules={{
-            required: "Phone number can't be empty",
+          defaultCountry="GB"
+          inputComponent={PhoneNumberInput}
+          placeholder="Your Phone number"
+          variant="outlined"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <BsPhone />
+              </InputAdornment>
+            ),
           }}
-          render={(field) => (
-            <TextField
-              {...field}
-              required
-              fullWidth
-              placeholder="Your Phone number"
-              variant="outlined"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <BsPhone />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )}
+          rules={{
+            required: "You did not provide a phone number",
+            validate: (value: string) => {
+              const valid = isValidPhoneNumber(value);
+
+              return valid || `Your provided phone number is not valid`;
+            },
+          }}
         />
+
         <HookFormError name="phone" errors={errors} />
       </Grid>
       <Grid item md={6} xs={12}>
@@ -98,8 +117,12 @@ export default function Form() {
           control={control}
           rules={{
             required: "Email address can't be empty",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Not a valid email address",
+            },
           }}
-          render={(field) => (
+          render={({ field }) => (
             <TextField
               {...field}
               required
@@ -125,7 +148,7 @@ export default function Form() {
           rules={{
             required: "Zip code can't be empty",
           }}
-          render={(field) => (
+          render={({ field }) => (
             <TextField
               {...field}
               fullWidth
@@ -149,7 +172,7 @@ export default function Form() {
         <Controller
           name="message"
           control={control}
-          render={(field) => (
+          render={({ field }) => (
             <TextField
               {...field}
               placeholder="Message (optional)"
@@ -173,6 +196,7 @@ export default function Form() {
             />
           )}
         />
+        <HookFormError name="message" errors={errors} />
       </Grid>
       <Grid item md={6} xs={12}>
         <LoadingButton
