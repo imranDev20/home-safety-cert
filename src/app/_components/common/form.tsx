@@ -93,6 +93,7 @@ export default function Form() {
           inputComponent={PhoneNumberInput}
           placeholder="Your Phone number"
           variant="outlined"
+          country="GB"
           InputProps={{
             endAdornment: (
               <InputAdornment position="start">
