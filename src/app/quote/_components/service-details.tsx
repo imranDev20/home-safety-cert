@@ -1,28 +1,84 @@
 "use client";
 
+import HookFormError from "@/app/_components/common/hook-form-error";
 import {
   Box,
   Button,
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Grid,
   Radio,
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Controller, useFormContext } from "react-hook-form";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import {
+  Controller,
+  ErrorOption,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { isObjectEmpty } from "@/shared/functions";
 
-export default function ServiceDetails() {
-  const { control, watch, resetField } = useFormContext();
+type ServiceFormInput = {
+  isGas: boolean;
+  isEicr: boolean;
+  isEpc: boolean;
+  appliances: string;
+  fuseBoards: string;
+  bedRooms: string;
+  tflZone: string;
+  time: string;
+};
+
+export default function ServiceDetails({
+  setActiveStep,
+}: {
+  setActiveStep: Dispatch<SetStateAction<number>>;
+}) {
+  const {
+    control,
+    watch,
+    resetField,
+    handleSubmit,
+    clearErrors,
+    setFocus,
+    formState: { errors },
+  } = useForm<ServiceFormInput>({
+    defaultValues: {
+      isGas: false,
+      isEicr: false,
+      isEpc: false,
+      appliances: "",
+      fuseBoards: "",
+      bedRooms: "",
+      tflZone: "",
+      time: "",
+    },
+  });
 
   const isGas = watch("isGas");
   const isEicr = watch("isEicr");
   const isEpc = watch("isEpc");
 
+  const handleServiceDetailsSubmit: SubmitHandler<ServiceFormInput> = (
+    data
+  ) => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    window.scrollTo(0, 300);
+  };
+
   return (
-    <Box>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(handleServiceDetailsSubmit)}
+      noValidate
+    >
+      <SnackbarProvider />
       <Typography
         component="h2"
         variant="h5"
@@ -37,15 +93,27 @@ export default function ServiceDetails() {
         <Grid item xs={12}>
           <Controller
             control={control}
+            rules={{
+              required: {
+                value: !isEicr && !isEpc,
+                message: "You must select a service",
+              },
+            }}
             name="isGas"
             render={({ field: { value, onChange } }) => (
               <FormControlLabel
                 control={
                   <Checkbox
                     value={value}
+                    required={!isEicr && !isEpc}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isGas) resetField("appliances");
+                      if (isGas) {
+                        resetField("appliances");
+                      }
+                      clearErrors("isEicr");
+                      clearErrors("isEpc");
+                      clearErrors("isGas");
                     }}
                   />
                 }
@@ -63,9 +131,17 @@ export default function ServiceDetails() {
             )}
           />
 
+          <HookFormError name="isGas" errors={errors} />
+
           <Controller
             control={control}
             name="appliances"
+            rules={{
+              required: {
+                value: isGas,
+                message: "Please select the number of appliances",
+              },
+            }}
             render={({ field }) => (
               <FormControl
                 disabled={!isGas}
@@ -103,20 +179,33 @@ export default function ServiceDetails() {
               </FormControl>
             )}
           />
+          <HookFormError name="appliances" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
           <Controller
             name="isEicr"
+            rules={{
+              required: {
+                value: !isGas && !isEpc,
+                message: "You must select a service",
+              },
+            }}
             control={control}
             render={({ field: { value, onChange } }) => (
               <FormControlLabel
                 control={
                   <Checkbox
                     value={value}
+                    required={!isGas && !isEpc}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isEicr) resetField("fuseBoards");
+                      if (isEicr) {
+                        resetField("fuseBoards");
+                      }
+                      clearErrors("isEicr");
+                      clearErrors("isEpc");
+                      clearErrors("isGas");
                     }}
                   />
                 }
@@ -133,10 +222,17 @@ export default function ServiceDetails() {
               />
             )}
           />
+          <HookFormError name="isEicr" errors={errors} />
 
           <Controller
             name="fuseBoards"
             control={control}
+            rules={{
+              required: {
+                value: isEicr,
+                message: "Please select the number of fuse boards",
+              },
+            }}
             render={({ field }) => (
               <FormControl fullWidth sx={{ mt: 1 }} disabled={!isEicr}>
                 <FormLabel
@@ -168,20 +264,33 @@ export default function ServiceDetails() {
               </FormControl>
             )}
           />
+          <HookFormError name="fuseBoards" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
           <Controller
             control={control}
             name="isEpc"
+            rules={{
+              required: {
+                value: !isGas && !isEicr,
+                message: "You must select a service",
+              },
+            }}
             render={({ field: { value, onChange } }) => (
               <FormControlLabel
                 control={
                   <Checkbox
                     value={value}
+                    required={!isEicr && !isGas}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isEpc) resetField("bedRooms");
+                      if (isEpc) {
+                        resetField("bedRooms");
+                      }
+                      clearErrors("isEicr");
+                      clearErrors("isEpc");
+                      clearErrors("isGas");
                     }}
                   />
                 }
@@ -198,10 +307,17 @@ export default function ServiceDetails() {
               />
             )}
           />
+          <HookFormError name="isEpc" errors={errors} />
 
           <Controller
             name="bedRooms"
             control={control}
+            rules={{
+              required: {
+                value: isEpc,
+                message: "Please select the number of bedrooms",
+              },
+            }}
             render={({ field }) => (
               <FormControl fullWidth sx={{ mt: 1 }} disabled={!isEpc}>
                 <FormLabel
@@ -228,6 +344,7 @@ export default function ServiceDetails() {
               </FormControl>
             )}
           />
+          <HookFormError name="bedRooms" errors={errors} />
         </Grid>
       </Grid>
 
@@ -236,6 +353,9 @@ export default function ServiceDetails() {
           <Controller
             name="tflZone"
             control={control}
+            rules={{
+              required: "TFL Zone information is required",
+            }}
             render={({ field }) => (
               <FormControl fullWidth>
                 <FormLabel
@@ -263,12 +383,16 @@ export default function ServiceDetails() {
               </FormControl>
             )}
           />
+          <HookFormError name="tflZone" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
           <Controller
             control={control}
             name="time"
+            rules={{
+              required: "Time information is required",
+            }}
             render={({ field }) => (
               <FormControl fullWidth>
                 <FormLabel
@@ -300,15 +424,25 @@ export default function ServiceDetails() {
               </FormControl>
             )}
           />
+          <HookFormError name="time" errors={errors} />
         </Grid>
       </Grid>
 
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
+        <FormHelperText
+          error
+          sx={{
+            fontSize: 16,
+          }}
+        >
+          {!isObjectEmpty(errors) && "Please select all the necessary fields"}
+        </FormHelperText>
         <Button
           type="submit"
           variant="blue"

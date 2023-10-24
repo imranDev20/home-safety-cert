@@ -25,3 +25,7 @@ export function toTitleCase(input: string): string {
     }
   });
 }
+
+export function isObjectEmpty<T extends {}>(obj: T): boolean {
+  return Object.keys(obj).length === 0;
+}

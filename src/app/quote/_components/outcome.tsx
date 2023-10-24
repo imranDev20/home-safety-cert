@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import successAnimation from "@/assets/success-animation.json";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Outcome() {
   return (
