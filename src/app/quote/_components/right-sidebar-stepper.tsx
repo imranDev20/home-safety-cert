@@ -1,13 +1,12 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { Divider } from "@mui/material";
+import { Card, CardContent, Divider, Grid } from "@mui/material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Dispatch, SetStateAction } from "react";
 
 const steps = [
   {
@@ -33,63 +32,103 @@ const steps = [
   },
 ];
 
-export default function RightSidebarStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-
+export default function RightSidebarStepper({
+  activeStep,
+  setActiveStep,
+}: {
+  activeStep: number;
+  setActiveStep: Dispatch<SetStateAction<number>>;
+}) {
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) =>
+      prevActiveStep < steps.length ? prevActiveStep + 1 : steps.length
+    );
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
+    setActiveStep((prevActiveStep) =>
+      prevActiveStep > 0 ? prevActiveStep - 1 : 0
+    );
   };
 
   return (
-    <Box sx={{ maxWidth: 400 }}>
-      <Typography
-        component="h3"
-        variant="h5"
-        sx={{
-          mb: 1,
-        }}
-      >
-        Order Completion
-      </Typography>
-      <Divider
-        sx={{
-          mb: 2,
-        }}
-      />
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepLabel>
-              <Typography variant="caption">{step.optional}</Typography>
-              <Typography
-                component="h4"
-                sx={{
-                  fontSize: 18,
-                  fontWeight: 500,
-                }}
+    <Card
+      elevation={0}
+      sx={{
+        boxShadow: "0 0 10px 0 rgba(43,52,59,.1)",
+      }}
+    >
+      <CardContent>
+        <Box>
+          <Typography
+            component="h3"
+            variant="h5"
+            sx={{
+              mb: 1,
+            }}
+          >
+            Order Completion
+          </Typography>
+          <Divider
+            sx={{
+              mb: 3,
+            }}
+          />
+          <Stepper activeStep={activeStep} orientation="vertical">
+            {steps.map((step, index) => (
+              <Step key={step.label}>
+                <StepLabel
+                  sx={{
+                    "& .MuiStepIcon-root.Mui-active": {
+                      color: "#53C31B",
+                    },
+                    "& .MuiStepIcon-root.Mui-completed": {
+                      color: "#53C31B",
+                    },
+                  }}
+                >
+                  <Typography variant="caption">{step.optional}</Typography>
+                  <Typography
+                    component="h4"
+                    sx={{
+                      fontSize: 18,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {step.label}
+                  </Typography>
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <Grid container spacing={3} mt={3}>
+            <Grid item xs={6}>
+              <Button
+                disabled={activeStep === 0}
+                fullWidth
+                startIcon={<ChevronLeft />}
+                variant="blue-outlined"
+                onClick={handleBack}
               >
-                {step.label}
-              </Typography>
-            </StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
-        </Paper>
-      )}
-    </Box>
+                Back
+              </Button>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                type="submit"
+                variant="blue"
+                endIcon={<ChevronRight />}
+                onClick={handleNext}
+              >
+                {activeStep > steps.length - 1 ? "Send" : "Next"}
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }
