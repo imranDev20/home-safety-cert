@@ -123,7 +123,7 @@ export default function RightSidebarStepper({
                 endIcon={<ChevronRight />}
                 onClick={handleNext}
               >
-                {activeStep > steps.length - 1 ? "Send" : "Next"}
+                {activeStep >= steps.length - 1 ? "Send" : "Next"}
               </Button>
             </Grid>
           </Grid>

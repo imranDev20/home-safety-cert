@@ -13,7 +13,8 @@ import PaymentDetails from "./_components/payment-details";
 import Outcome from "./_components/outcome";
 
 export default function QuotePage() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
+  const [order, setOrder] = useState({});
 
   return (
     <Box
@@ -52,7 +53,11 @@ export default function QuotePage() {
                 }}
               >
                 {activeStep === 0 ? (
-                  <ServiceDetails setActiveStep={setActiveStep} />
+                  <ServiceDetails
+                    setActiveStep={setActiveStep}
+                    order={order}
+                    setOrder={setOrder}
+                  />
                 ) : null}
                 {activeStep === 1 ? <PersonalDetails /> : null}
                 {activeStep === 2 ? <PaymentDetails /> : null}

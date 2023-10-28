@@ -14,13 +14,8 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect } from "react";
-import {
-  Controller,
-  ErrorOption,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { isObjectEmpty } from "@/shared/functions";
 
@@ -37,8 +32,12 @@ type ServiceFormInput = {
 
 export default function ServiceDetails({
   setActiveStep,
+  order,
+  setOrder,
 }: {
   setActiveStep: Dispatch<SetStateAction<number>>;
+  order: any;
+  setOrder: Dispatch<SetStateAction<any>>;
 }) {
   const {
     control,
@@ -46,7 +45,6 @@ export default function ServiceDetails({
     resetField,
     handleSubmit,
     clearErrors,
-    setFocus,
     formState: { errors },
   } = useForm<ServiceFormInput>({
     defaultValues: {
@@ -68,9 +66,12 @@ export default function ServiceDetails({
   const handleServiceDetailsSubmit: SubmitHandler<ServiceFormInput> = (
     data
   ) => {
+    setOrder({ ...data });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     window.scrollTo(0, 300);
   };
+
+  console.log(watch("isGas"));
 
   return (
     <Box
