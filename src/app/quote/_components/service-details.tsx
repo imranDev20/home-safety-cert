@@ -14,21 +14,11 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { isObjectEmpty } from "@/shared/functions";
-
-type ServiceFormInput = {
-  isGas: boolean;
-  isEicr: boolean;
-  isEpc: boolean;
-  appliances: string;
-  fuseBoards: string;
-  bedRooms: string;
-  tflZone: string;
-  time: string;
-};
+import { ServiceFormInput } from "@/types/form";
 
 export default function ServiceDetails({
   setActiveStep,
@@ -36,8 +26,8 @@ export default function ServiceDetails({
   setOrder,
 }: {
   setActiveStep: Dispatch<SetStateAction<number>>;
-  order: any;
-  setOrder: Dispatch<SetStateAction<any>>;
+  order: ServiceFormInput;
+  setOrder: Dispatch<SetStateAction<ServiceFormInput>>;
 }) {
   const {
     control,
@@ -45,17 +35,19 @@ export default function ServiceDetails({
     resetField,
     handleSubmit,
     clearErrors,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm<ServiceFormInput>({
     defaultValues: {
-      isGas: false,
-      isEicr: false,
-      isEpc: false,
-      appliances: "",
-      fuseBoards: "",
-      bedRooms: "",
-      tflZone: "",
-      time: "",
+      isGas: order.isGas ? order.isGas : false,
+      isEicr: order.isEicr ? order.isEicr : false,
+      isEpc: order.isEpc ? order.isEpc : false,
+      appliances: order.appliances ? order.appliances : "",
+      fuseBoards: order.fuseBoards ? order.fuseBoards : "",
+      bedRooms: order.bedRooms ? order.bedRooms : "",
+      tflZone: order.tflZone ? order.tflZone : "",
+      time: order.time ? order.time : "",
     },
   });
 
@@ -70,8 +62,6 @@ export default function ServiceDetails({
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     window.scrollTo(0, 300);
   };
-
-  console.log(watch("isGas"));
 
   return (
     <Box
@@ -105,13 +95,14 @@ export default function ServiceDetails({
               <FormControlLabel
                 control={
                   <Checkbox
-                    value={value}
+                    checked={value}
                     required={!isEicr && !isEpc}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isGas) {
-                        resetField("appliances");
-                      }
+
+                      setValue("appliances", "");
+                      setOrder({ ...order, appliances: "" });
+
                       clearErrors("isEicr");
                       clearErrors("isEpc");
                       clearErrors("isGas");
@@ -197,13 +188,14 @@ export default function ServiceDetails({
               <FormControlLabel
                 control={
                   <Checkbox
-                    value={value}
+                    checked={value}
                     required={!isGas && !isEpc}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isEicr) {
-                        resetField("fuseBoards");
-                      }
+
+                      setValue("fuseBoards", "");
+                      setOrder({ ...order, fuseBoards: "" });
+
                       clearErrors("isEicr");
                       clearErrors("isEpc");
                       clearErrors("isGas");
@@ -282,13 +274,14 @@ export default function ServiceDetails({
               <FormControlLabel
                 control={
                   <Checkbox
-                    value={value}
+                    checked={value}
                     required={!isEicr && !isGas}
                     onChange={(e) => {
                       onChange(e.target.checked);
-                      if (isEpc) {
-                        resetField("bedRooms");
-                      }
+
+                      setValue("bedRooms", "");
+                      setOrder({ ...order, bedRooms: "" });
+
                       clearErrors("isEicr");
                       clearErrors("isEpc");
                       clearErrors("isGas");
