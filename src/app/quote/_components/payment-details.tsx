@@ -1,57 +1,60 @@
-import { Grid, TextField, Typography } from "@mui/material";
-import React from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import CheckoutForm from "./checkout-form";
+import axios from "axios";
 
-type Props = {};
+export default function PaymentDetails({
+  setActiveStep,
+}: {
+  setActiveStep: Dispatch<SetStateAction<number>>;
+}) {
+  const [stripePromise, setStripePromise] = useState<any>();
+  const [clientSecret, setClientSecret] = useState("");
 
-export default function PaymentDetails({}: Props) {
+  useEffect(() => {
+    const fetchKey = async () => {
+      try {
+        const response = await axios.get("/api/config");
+        setStripePromise(loadStripe(response.data.publishableKey));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchKey();
+  }, []);
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      try {
+        const response = await axios.post("/api/create-payment-intent");
+        setClientSecret(response.data.clientSecret);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchClientSecret();
+  }, []);
+
   return (
     <>
-      <Typography
-        component="h2"
-        variant="h5"
-        sx={{
-          mb: 3,
-        }}
-      >
-        3. Payment Details
-      </Typography>
+      {stripePromise && clientSecret && (
+        <Elements
+          stripe={stripePromise}
+          options={{
+            clientSecret,
+            loader: "always",
 
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Name"
-            variant="outlined"
-            placeholder="Your name on card"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Card Number"
-            variant="outlined"
-            placeholder="Enter your card number"
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            label="Card Expiration Date"
-            variant="outlined"
-            placeholder="Your name on card"
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            label="CVC/CVV"
-            variant="outlined"
-            placeholder="Card Verification Code/Value"
-          />
-        </Grid>
-      </Grid>
+            appearance: {
+              theme: "stripe",
+              labels: "floating",
+            },
+          }}
+        >
+          <CheckoutForm setActiveStep={setActiveStep} />
+        </Elements>
+      )}
     </>
   );
 }

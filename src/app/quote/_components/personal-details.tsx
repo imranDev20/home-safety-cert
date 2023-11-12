@@ -1,7 +1,56 @@
 "use client";
-import { Chip, Divider, Grid, TextField, Typography } from "@mui/material";
+import HookFormError from "@/app/_components/common/hook-form-error";
+import { PersonalFormInput } from "@/types/form";
+import {
+  Button,
+  Chip,
+  Divider,
+  Grid,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-number-input/react-hook-form-input";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import { isValid } from "postcode";
+import { BsPhone } from "react-icons/bs";
+import PhoneNumberInput from "@/app/_components/common/phone-number-input";
+import { Dispatch, SetStateAction } from "react";
+import { Order } from "@/types/misc";
 
-export default function PersonalDetails() {
+export default function PersonalDetails({
+  setActiveStep,
+  order,
+  setOrder,
+}: {
+  setActiveStep: Dispatch<SetStateAction<number>>;
+  order: Order;
+  setOrder: Dispatch<SetStateAction<Order>>;
+}) {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PersonalFormInput>({
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      house: "",
+      postCode: "",
+      city: "London",
+    },
+  });
+
+  const onPersonalDetailsSubmit: SubmitHandler<PersonalFormInput> = (data) => {
+    console.log(data);
+
+    setOrder({ ...order, ...data });
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    window.scrollTo(0, 300);
+  };
+
   return (
     <>
       <Typography
@@ -14,31 +63,81 @@ export default function PersonalDetails() {
         2. Personal Details
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid
+        container
+        spacing={3}
+        component="form"
+        onSubmit={handleSubmit(onPersonalDetailsSubmit)}
+      >
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Name"
-            variant="outlined"
-            placeholder="Your name"
+          <Controller
+            control={control}
+            name="name"
+            rules={{
+              required: "Name can't be empty",
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Name"
+                variant="outlined"
+                placeholder="Your name"
+              />
+            )}
           />
+          <HookFormError name="name" errors={errors} />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Email"
-            variant="outlined"
-            placeholder="Your email address"
+          <Controller
+            control={control}
+            name="email"
+            rules={{
+              required: "Email can't be empty",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Email is not valid",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Email"
+                variant="outlined"
+                placeholder="Your email address"
+              />
+            )}
           />
+          <HookFormError name="email" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Phone"
+          <PhoneInput
+            name="phone"
+            control={control}
+            defaultCountry="GB"
+            inputComponent={PhoneNumberInput}
+            placeholder="Your Phone number"
             variant="outlined"
-            placeholder="Your phone number"
+            country="GB"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <BsPhone />
+                </InputAdornment>
+              ),
+            }}
+            rules={{
+              required: "You did not provide a phone number",
+              validate: (value: string) => {
+                const valid = isValidPhoneNumber(value);
+
+                return valid || `Your provided phone number is not valid`;
+              },
+            }}
           />
+          <HookFormError name="phone" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
@@ -54,30 +153,82 @@ export default function PersonalDetails() {
         </Grid>
 
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="House and Street"
-            variant="outlined"
-            placeholder="Your house number and street name"
+          <Controller
+            control={control}
+            name="house"
+            rules={{
+              required: "House & Street can't be empty",
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="House & Street"
+                variant="outlined"
+                placeholder="Your house number and street name"
+              />
+            )}
           />
+          <HookFormError name="house" errors={errors} />
         </Grid>
 
         <Grid item xs={6}>
-          <TextField
-            fullWidth
-            label="Post Code"
-            variant="outlined"
-            placeholder="Your post code"
+          <Controller
+            control={control}
+            name="postCode"
+            rules={{
+              required: "Post code can't be empty",
+              validate: (value) => {
+                return isValid(value) || "Not a valid British post code";
+              },
+            }}
+            render={({ field: { value, onChange } }) => (
+              <TextField
+                value={value}
+                onChange={(e) => onChange(e.target.value.toUpperCase())}
+                fullWidth
+                label="Post Code"
+                variant="outlined"
+                placeholder="Your post code"
+              />
+            )}
           />
+          <HookFormError name="postCode" errors={errors} />
         </Grid>
         <Grid item xs={6}>
-          <TextField
-            disabled
-            fullWidth
-            defaultValue="London"
-            label="City"
-            variant="outlined"
+          <Controller
+            control={control}
+            name="city"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                disabled
+                fullWidth
+                label="City"
+                variant="outlined"
+              />
+            )}
           />
+          <HookFormError name="city" errors={errors} />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            type="submit"
+            variant="blue"
+            sx={{
+              mt: 2,
+            }}
+          >
+            Next: Payment Details
+          </Button>
         </Grid>
       </Grid>
     </>

@@ -11,10 +11,32 @@ import ServiceDetails from "./_components/service-details";
 import PersonalDetails from "./_components/personal-details";
 import PaymentDetails from "./_components/payment-details";
 import Outcome from "./_components/outcome";
+import { Order } from "@/types/misc";
+import { useSearchParams } from "next/navigation";
 
 export default function QuotePage() {
-  const [activeStep, setActiveStep] = useState(1);
-  const [order, setOrder] = useState({});
+  const [activeStep, setActiveStep] = useState(0);
+  const searchParams = useSearchParams();
+  const [order, setOrder] = useState<Order>({
+    isGas: false,
+    isEpc: false,
+    isEicr: false,
+    appliances: "",
+    fuseBoards: "",
+    bedRooms: "",
+    tflZone: "",
+    time: "",
+    name: "",
+    email: "",
+    phone: "",
+    house: "",
+    postCode: "",
+    city: "",
+  });
+
+  const activeStepQ = searchParams.get("active_step");
+
+  console.log(searchParams);
 
   return (
     <Box
@@ -59,9 +81,19 @@ export default function QuotePage() {
                     setOrder={setOrder}
                   />
                 ) : null}
-                {activeStep === 1 ? <PersonalDetails /> : null}
-                {activeStep === 2 ? <PaymentDetails /> : null}
-                {activeStep === 3 ? <Outcome /> : null}
+                {activeStep === 1 ? (
+                  <PersonalDetails
+                    setActiveStep={setActiveStep}
+                    order={order}
+                    setOrder={setOrder}
+                  />
+                ) : null}
+                {activeStep === 2 ? (
+                  <PaymentDetails setActiveStep={setActiveStep} />
+                ) : null}
+                {activeStep === 3 ? (
+                  <Outcome setActiveStep={setActiveStep} />
+                ) : null}
               </CardContent>
             </Card>
           </Grid>

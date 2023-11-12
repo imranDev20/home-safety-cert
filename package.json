@@ -15,9 +15,12 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/lab": "^5.0.0-alpha.146",
     "@mui/material": "^5.14.10",
+    "@stripe/react-stripe-js": "^2.3.1",
+    "@stripe/stripe-js": "^2.1.10",
     "@types/node": "20.6.3",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
+    "axios": "^1.6.1",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
     "framer-motion": "^10.16.4",
@@ -35,6 +38,7 @@
     "react-phone-number-input": "^3.3.7",
     "react-responsive-masonry": "^2.1.7",
     "react-use": "^17.4.0",
+    "stripe": "^14.2.0",
     "typescript": "5.2.2"
   },
   "devDependencies": {

@@ -19,6 +19,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 import { isObjectEmpty } from "@/shared/functions";
 import { ServiceFormInput } from "@/types/form";
+import { Order } from "@/types/misc";
 
 export default function ServiceDetails({
   setActiveStep,
@@ -26,16 +27,14 @@ export default function ServiceDetails({
   setOrder,
 }: {
   setActiveStep: Dispatch<SetStateAction<number>>;
-  order: ServiceFormInput;
-  setOrder: Dispatch<SetStateAction<ServiceFormInput>>;
+  order: Order;
+  setOrder: Dispatch<SetStateAction<Order>>;
 }) {
   const {
     control,
     watch,
-    resetField,
     handleSubmit,
     clearErrors,
-    reset,
     setValue,
     formState: { errors },
   } = useForm<ServiceFormInput>({
@@ -58,8 +57,14 @@ export default function ServiceDetails({
   const handleServiceDetailsSubmit: SubmitHandler<ServiceFormInput> = (
     data
   ) => {
-    setOrder({ ...data });
+    setOrder({ ...order, ...data });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    // router.push(
+    //   pathname +
+    //     "?" +
+
+    // );
     window.scrollTo(0, 300);
   };
 

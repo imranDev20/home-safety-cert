@@ -21,7 +21,7 @@ type ContactFormInput = {
   name: string;
   email: string;
   phone: string;
-  zipCode: string;
+  postCode: string;
   message: string;
 };
 
@@ -35,7 +35,7 @@ export default function Form() {
       name: "",
       email: "",
       phone: "",
-      zipCode: "",
+      postCode: "",
       message: "",
     },
   });
@@ -145,10 +145,10 @@ export default function Form() {
       </Grid>
       <Grid item md={6} xs={12}>
         <Controller
-          name="zipCode"
+          name="postCode"
           control={control}
           rules={{
-            required: "Zip code can't be empty",
+            required: "Post code can't be empty",
             validate: (value) => {
               return isValid(value) || "Not a valid British post code";
             },
@@ -170,7 +170,7 @@ export default function Form() {
             />
           )}
         />
-        <HookFormError name="zipCode" errors={errors} />
+        <HookFormError name="postCode" errors={errors} />
       </Grid>
 
       <Grid item xs={12}>

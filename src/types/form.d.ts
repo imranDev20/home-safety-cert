@@ -8,3 +8,12 @@ export type ServiceFormInput = {
   tflZone: string;
   time: string;
 };
+
+export type PersonalFormInput = {
+  name: string;
+  email: string;
+  phone: string;
+  house: string;
+  postCode: string;
+  city: string;
+};
