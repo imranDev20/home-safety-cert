@@ -134,9 +134,12 @@ export const theme = createTheme({
               fontSize: 13,
               bgcolor: "primary.main",
               fontWeight: 600,
+              border: "1px solid",
+              borderColor: "primary.main",
               color: "white",
               "&:hover": {
                 bgcolor: "secondary.main",
+                borderColor: "secondary.main",
               },
             }),
         },
@@ -169,6 +172,9 @@ export const theme = createTheme({
               color: "primary.main",
               border: "1px solid",
               borderColor: "primary.main",
+              "&.Mui-disabled": {
+                borderColor: "rgba(0, 0, 0, 0.26)",
+              },
               "&:hover": {
                 color: "white",
                 bgcolor: "primary.main",

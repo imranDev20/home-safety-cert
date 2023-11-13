@@ -1,6 +1,8 @@
+"use client";
 import { Box, Button, Container } from "@mui/material";
 import Link from "next/link";
-import NotFoundImage from "../images/not-found-image.svg";
+import Lottie from "lottie-react";
+import notFoundAnimation from "@/assets/not-found-animation.json";
 
 export default function NotFound() {
   return (
@@ -11,7 +13,7 @@ export default function NotFound() {
         mb: 10,
       }}
     >
-      <NotFoundImage />
+      <Lottie animationData={notFoundAnimation} loop={true} />
       <Box
         sx={{
           display: "flex",

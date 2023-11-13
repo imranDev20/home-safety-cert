@@ -12,8 +12,6 @@ export default function ServiceCard({ service }: ServiceCardProps) {
 
   const theme = useTheme();
 
-  console.log();
-
   return (
     <Card
       onMouseOver={() => setExpand(true)}
