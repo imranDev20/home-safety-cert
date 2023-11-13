@@ -1,11 +1,11 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Button } from "@mui/material";
+import { Alert } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 import { createQueryString } from "@/shared/functions";
 import { Order } from "@/types/misc";
@@ -100,6 +100,7 @@ export default function CheckoutForm({ order }: { order: Order }) {
           },
         }}
       />
+
       <LoadingButton
         variant="contained"
         type="submit"

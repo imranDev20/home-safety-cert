@@ -60,6 +60,7 @@ export default function ServiceDetails({
     data
   ) => {
     setOrder({ ...order, ...data });
+
     router.push(pathname + "?" + createQueryString("active_step", "2"));
     window.scrollTo(0, 300);
   };

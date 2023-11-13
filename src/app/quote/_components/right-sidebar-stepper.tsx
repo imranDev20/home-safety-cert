@@ -41,6 +41,8 @@ export default function RightSidebarStepper({
 
   const handleBack = () => {};
 
+  console.log(activeStep);
+
   return (
     <Card
       elevation={0}
@@ -64,7 +66,7 @@ export default function RightSidebarStepper({
               mb: 3,
             }}
           />
-          <Stepper activeStep={activeStep} orientation="vertical">
+          <Stepper activeStep={activeStep - 1} orientation="vertical">
             {steps.map((step, index) => (
               <Step key={step.label}>
                 <StepLabel
@@ -95,7 +97,7 @@ export default function RightSidebarStepper({
           <Grid container spacing={3} mt={3}>
             <Grid item xs={6}>
               <Button
-                disabled={activeStep === 0}
+                disabled={activeStep === 1}
                 fullWidth
                 startIcon={<ChevronLeft />}
                 variant="blue-outlined"
@@ -113,7 +115,7 @@ export default function RightSidebarStepper({
                 endIcon={<ChevronRight />}
                 onClick={handleNext}
               >
-                {activeStep >= steps.length - 1 ? "Send" : "Next"}
+                {activeStep === 3 ? "Send" : "Next"}
               </Button>
             </Grid>
           </Grid>
