@@ -18,7 +18,6 @@ export async function POST(req: any) {
       process.env.STRIPE_WEBHOOK_SECRET_KEY as string
     );
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       {
         message: "Webhook signature verification failed",
@@ -28,8 +27,6 @@ export async function POST(req: any) {
       }
     );
   }
-
-  console.log(event);
 
   // Handle the event
   switch (event.type) {

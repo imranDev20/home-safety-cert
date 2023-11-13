@@ -1,7 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Card, CardContent, Container, Grid } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import PageHeader from "../_components/common/page-header";
 import BackgroundImage from "@/images/about-bg.jpeg";
 import Heading from "../_components/common/heading";
@@ -70,6 +77,8 @@ export default function QuotePage() {
     fetchClientSecret();
   }, []);
 
+  console.log(activeStep);
+
   return (
     <Box
       sx={{
@@ -106,7 +115,7 @@ export default function QuotePage() {
                   p: 3,
                 }}
               >
-                {stripePromise && clientSecret && (
+                {stripePromise && clientSecret ? (
                   <Elements
                     stripe={stripePromise}
                     options={{
@@ -119,7 +128,7 @@ export default function QuotePage() {
                       },
                     }}
                   >
-                    {activeStep === 1 ? (
+                    {activeStep === 1 || Number.isNaN(activeStep) ? (
                       <ServiceDetails order={order} setOrder={setOrder} />
                     ) : null}
                     {activeStep === 2 ? (
@@ -128,6 +137,27 @@ export default function QuotePage() {
                     {activeStep === 3 ? <PaymentDetails order={order} /> : null}
                     {activeStep === 4 ? <Outcome /> : null}
                   </Elements>
+                ) : (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      height: 300,
+                    }}
+                  >
+                    <CircularProgress size={40} />
+                    <Typography
+                      sx={{
+                        mt: 3,
+                        fontWeight: 500,
+                        fontSize: 20,
+                      }}
+                    >
+                      Loading
+                    </Typography>
+                  </Box>
                 )}
               </CardContent>
             </Card>

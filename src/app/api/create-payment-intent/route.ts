@@ -19,10 +19,33 @@ export async function POST() {
       description: "Thanks for your purchase!",
     });
 
-    return NextResponse.json({
-      clientSecret: paymentIntent.client_secret,
-    });
+    if (paymentIntent.client_secret) {
+      return NextResponse.json(
+        {
+          clientSecret: paymentIntent.client_secret,
+        },
+        {
+          status: 200,
+        }
+      );
+    } else {
+      return NextResponse.json(
+        {
+          message: "Payment intent not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      {
+        message: "Internal Server Error",
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

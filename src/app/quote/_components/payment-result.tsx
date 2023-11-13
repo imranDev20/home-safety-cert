@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import successAnimation from "@/assets/success-animation.json";
 import errorAnimation from "@/assets/error-animation-2.json";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { createQueryString } from "@/shared/functions";
@@ -74,6 +74,8 @@ export default function PaymentResult() {
     fetchIntent();
   }, [stripe, searchParams]);
 
+  console.log(message);
+
   return (
     <div>
       {message?.status === "succeeded" && (
@@ -92,7 +94,13 @@ export default function PaymentResult() {
           >
             <Lottie animationData={successAnimation} loop={false} />
           </Box>
-          <Typography component="h1" variant="h5">
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              textAlign: "center",
+            }}
+          >
             {message.text}
           </Typography>
           <Typography
@@ -152,9 +160,30 @@ export default function PaymentResult() {
         </Box>
       )}
 
-      {(message?.status !== "succeeded" ||
-        message?.status !== "processing" ||
-        message?.status !== "requires_payment_method") && (
+      {(message === null || message?.status === "processing") && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            height: 300,
+          }}
+        >
+          <CircularProgress size={40} />
+          <Typography
+            sx={{
+              mt: 3,
+              fontWeight: 500,
+              fontSize: 20,
+            }}
+          >
+            Loading
+          </Typography>
+        </Box>
+      )}
+
+      {message?.status === "requires_payment_method" && (
         <Box
           sx={{
             display: "flex",
@@ -170,7 +199,13 @@ export default function PaymentResult() {
           >
             <Lottie animationData={errorAnimation} loop={false} />
           </Box>
-          <Typography component="h1" variant="h5">
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{
+              textAlign: "center",
+            }}
+          >
             {message?.text}
           </Typography>
           <Typography
