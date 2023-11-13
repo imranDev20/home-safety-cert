@@ -18,27 +18,30 @@ import { BsPhone } from "react-icons/bs";
 import PhoneNumberInput from "@/app/_components/common/phone-number-input";
 import { Dispatch, SetStateAction } from "react";
 import { Order } from "@/types/misc";
+import { usePathname, useRouter } from "next/navigation";
+import { createQueryString } from "@/shared/functions";
 
 export default function PersonalDetails({
-  setActiveStep,
   order,
   setOrder,
 }: {
-  setActiveStep: Dispatch<SetStateAction<number>>;
   order: Order;
   setOrder: Dispatch<SetStateAction<Order>>;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<PersonalFormInput>({
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      house: "",
-      postCode: "",
+      name: order.name || "",
+      email: order.email || "",
+      phone: order.phone || "",
+      house: order.house || "",
+      postCode: order.postCode || "",
       city: "London",
     },
   });
@@ -47,7 +50,7 @@ export default function PersonalDetails({
     console.log(data);
 
     setOrder({ ...order, ...data });
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    router.push(pathname + "?" + createQueryString("active_step", "3"));
     window.scrollTo(0, 300);
   };
 

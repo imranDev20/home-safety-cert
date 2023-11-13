@@ -29,3 +29,10 @@ export function toTitleCase(input: string): string {
 export function isObjectEmpty<T extends {}>(obj: T): boolean {
   return Object.keys(obj).length === 0;
 }
+
+export const createQueryString = (name: string, value: string) => {
+  const params = new URLSearchParams();
+  params.set(name, value);
+
+  return params.toString();
+};

@@ -16,6 +16,7 @@ export async function POST() {
       currency: "gbp",
       amount: 1999,
       payment_method_types: ["link", "card", "paypal", "revolut_pay"],
+      description: "Thanks for your purchase!",
     });
 
     return NextResponse.json({

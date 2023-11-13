@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import {
   PaymentElement,
   useElements,
@@ -12,13 +6,11 @@ import {
 } from "@stripe/react-stripe-js";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Button } from "@mui/material";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { createQueryString } from "@/shared/functions";
+import { Order } from "@/types/misc";
 
-export default function CheckoutForm({
-  setActiveStep,
-}: {
-  setActiveStep: Dispatch<SetStateAction<number>>;
-}) {
+export default function CheckoutForm({ order }: { order: Order }) {
   const [status, setStatus] = useState<string>();
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
@@ -26,37 +18,26 @@ export default function CheckoutForm({
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    window.scrollTo(0, 300);
-  }, []);
-
-  const createQueryString = (name: string, value: string) => {
-    const params = new URLSearchParams();
-    params.set(name, value);
-
-    return params.toString();
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
     setLoading(true);
-
-    console.log(window.location.href);
 
     stripe
       .confirmPayment({
         elements,
         redirect: "if_required",
         confirmParams: {
-          return_url: window.location.href,
-          receipt_email: "imrandev20@gmail.com",
+          return_url:
+            window.location.origin +
+            window.location.pathname +
+            "?" +
+            createQueryString("active_step", "4"),
+          receipt_email: order.email,
         },
       })
       .then((res) => {
@@ -65,6 +46,8 @@ export default function CheckoutForm({
           router.push(
             pathname +
               "?" +
+              createQueryString("active_step", "4") +
+              "&" +
               createQueryString(
                 "payment_intent",
                 res.error.payment_intent?.id as string
@@ -78,13 +61,12 @@ export default function CheckoutForm({
               createQueryString("redirect_status", "failed")
           );
           setStatus(res.error.message);
-          window.scrollTo(0, 300);
-          setActiveStep(3);
         } else {
-          setStatus(res.paymentIntent.status);
           router.push(
             pathname +
               "?" +
+              createQueryString("active_step", "4") +
+              "&" +
               createQueryString("payment_intent", res.paymentIntent.id) +
               "&" +
               createQueryString(
@@ -94,8 +76,7 @@ export default function CheckoutForm({
               "&" +
               createQueryString("redirect_status", res.paymentIntent.status)
           );
-          window.scrollTo(0, 300);
-          setActiveStep(3);
+          setStatus(res.paymentIntent.status);
         }
       });
   };
@@ -106,14 +87,14 @@ export default function CheckoutForm({
         options={{
           defaultValues: {
             billingDetails: {
-              email: "imrandev20@gmail.com",
-              name: "Imran Kabir",
-              phone: "+4402034884929",
+              email: order.email,
+              name: order.name,
+              phone: order.phone,
               address: {
-                country: "UK",
-                postal_code: "E1 5NP",
+                country: "GB",
                 city: "London",
-                line1: "Salisbury Ave, Barking",
+                postal_code: order.postCode,
+                line1: order.house,
               },
             },
           },

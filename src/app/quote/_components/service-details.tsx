@@ -17,19 +17,21 @@ import {
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
-import { isObjectEmpty } from "@/shared/functions";
+import { createQueryString, isObjectEmpty } from "@/shared/functions";
 import { ServiceFormInput } from "@/types/form";
 import { Order } from "@/types/misc";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ServiceDetails({
-  setActiveStep,
   order,
   setOrder,
 }: {
-  setActiveStep: Dispatch<SetStateAction<number>>;
   order: Order;
   setOrder: Dispatch<SetStateAction<Order>>;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const {
     control,
     watch,
@@ -39,14 +41,14 @@ export default function ServiceDetails({
     formState: { errors },
   } = useForm<ServiceFormInput>({
     defaultValues: {
-      isGas: order.isGas ? order.isGas : false,
-      isEicr: order.isEicr ? order.isEicr : false,
-      isEpc: order.isEpc ? order.isEpc : false,
-      appliances: order.appliances ? order.appliances : "",
-      fuseBoards: order.fuseBoards ? order.fuseBoards : "",
-      bedRooms: order.bedRooms ? order.bedRooms : "",
-      tflZone: order.tflZone ? order.tflZone : "",
-      time: order.time ? order.time : "",
+      isGas: order.isGas || false,
+      isEicr: order.isEicr || false,
+      isEpc: order.isEpc || false,
+      appliances: order.appliances || "",
+      fuseBoards: order.fuseBoards || "",
+      bedRooms: order.bedRooms || "",
+      tflZone: order.tflZone || "",
+      time: order.time || "",
     },
   });
 
@@ -58,13 +60,7 @@ export default function ServiceDetails({
     data
   ) => {
     setOrder({ ...order, ...data });
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-    // router.push(
-    //   pathname +
-    //     "?" +
-
-    // );
+    router.push(pathname + "?" + createQueryString("active_step", "2"));
     window.scrollTo(0, 300);
   };
 

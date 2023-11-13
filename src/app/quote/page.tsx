@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Card, CardContent, Container, Grid } from "@mui/material";
 import PageHeader from "../_components/common/page-header";
@@ -13,9 +13,11 @@ import PaymentDetails from "./_components/payment-details";
 import Outcome from "./_components/outcome";
 import { Order } from "@/types/misc";
 import { useSearchParams } from "next/navigation";
+import { Elements } from "@stripe/react-stripe-js";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default function QuotePage() {
-  const [activeStep, setActiveStep] = useState(0);
   const searchParams = useSearchParams();
   const [order, setOrder] = useState<Order>({
     isGas: false,
@@ -34,9 +36,39 @@ export default function QuotePage() {
     city: "",
   });
 
-  const activeStepQ = searchParams.get("active_step");
+  const activeStep = parseInt(searchParams.get("active_step") as string);
 
-  console.log(searchParams);
+  useEffect(() => {
+    window.scrollTo(0, 300);
+  }, [activeStep]);
+
+  const [stripePromise, setStripePromise] = useState<any>();
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    const fetchKey = async () => {
+      try {
+        const response = await axios.get("/api/config");
+        setStripePromise(loadStripe(response.data.publishableKey));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchKey();
+  }, []);
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      try {
+        const response = await axios.post("/api/create-payment-intent");
+        setClientSecret(response.data.clientSecret);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchClientSecret();
+  }, []);
 
   return (
     <Box
@@ -74,35 +106,35 @@ export default function QuotePage() {
                   p: 3,
                 }}
               >
-                {activeStep === 0 ? (
-                  <ServiceDetails
-                    setActiveStep={setActiveStep}
-                    order={order}
-                    setOrder={setOrder}
-                  />
-                ) : null}
-                {activeStep === 1 ? (
-                  <PersonalDetails
-                    setActiveStep={setActiveStep}
-                    order={order}
-                    setOrder={setOrder}
-                  />
-                ) : null}
-                {activeStep === 2 ? (
-                  <PaymentDetails setActiveStep={setActiveStep} />
-                ) : null}
-                {activeStep === 3 ? (
-                  <Outcome setActiveStep={setActiveStep} />
-                ) : null}
+                {stripePromise && clientSecret && (
+                  <Elements
+                    stripe={stripePromise}
+                    options={{
+                      clientSecret,
+                      loader: "always",
+
+                      appearance: {
+                        theme: "stripe",
+                        labels: "floating",
+                      },
+                    }}
+                  >
+                    {activeStep === 1 ? (
+                      <ServiceDetails order={order} setOrder={setOrder} />
+                    ) : null}
+                    {activeStep === 2 ? (
+                      <PersonalDetails order={order} setOrder={setOrder} />
+                    ) : null}
+                    {activeStep === 3 ? <PaymentDetails order={order} /> : null}
+                    {activeStep === 4 ? <Outcome /> : null}
+                  </Elements>
+                )}
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item md={4}>
-            <RightSidebarStepper
-              activeStep={activeStep}
-              setActiveStep={setActiveStep}
-            />
+            <RightSidebarStepper activeStep={activeStep} />
           </Grid>
         </Grid>
       </Container>

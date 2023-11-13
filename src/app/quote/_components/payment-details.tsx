@@ -3,12 +3,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CheckoutForm from "./checkout-form";
 import axios from "axios";
+import { Order } from "@/types/misc";
 
-export default function PaymentDetails({
-  setActiveStep,
-}: {
-  setActiveStep: Dispatch<SetStateAction<number>>;
-}) {
+export default function PaymentDetails({ order }: { order: Order }) {
   const [stripePromise, setStripePromise] = useState<any>();
   const [clientSecret, setClientSecret] = useState("");
 
@@ -52,7 +49,7 @@ export default function PaymentDetails({
             },
           }}
         >
-          <CheckoutForm setActiveStep={setActiveStep} />
+          <CheckoutForm order={order} />
         </Elements>
       )}
     </>

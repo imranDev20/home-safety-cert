@@ -34,22 +34,12 @@ const steps = [
 
 export default function RightSidebarStepper({
   activeStep,
-  setActiveStep,
 }: {
   activeStep: number;
-  setActiveStep: Dispatch<SetStateAction<number>>;
 }) {
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep < steps.length ? prevActiveStep + 1 : steps.length
-    );
-  };
+  const handleNext = () => {};
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep > 0 ? prevActiveStep - 1 : 0
-    );
-  };
+  const handleBack = () => {};
 
   return (
     <Card
