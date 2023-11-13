@@ -2,8 +2,10 @@
 import HookFormError from "@/app/_components/common/hook-form-error";
 import { PersonalFormInput } from "@/types/form";
 import {
+  Box,
   Button,
   Chip,
+  CircularProgress,
   Divider,
   Grid,
   InputAdornment,
@@ -16,7 +18,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { isValid } from "postcode";
 import { BsPhone } from "react-icons/bs";
 import PhoneNumberInput from "@/app/_components/common/phone-number-input";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Order } from "@/types/misc";
 import { usePathname, useRouter } from "next/navigation";
 import { createQueryString } from "@/shared/functions";
@@ -47,12 +49,41 @@ export default function PersonalDetails({
   });
 
   const onPersonalDetailsSubmit: SubmitHandler<PersonalFormInput> = (data) => {
-    console.log(data);
-
-    setOrder({ ...order, ...data });
+    setOrder({ ...order, ...data, isPersonalStepComplete: true });
     router.push(pathname + "?" + createQueryString("active_step", "3"));
     window.scrollTo(0, 300);
   };
+
+  useEffect(() => {
+    if (!order.isServiceStepComplete) {
+      router.push(pathname + "?" + createQueryString("active_step", "1"));
+    }
+  }, [order.isServiceStepComplete, pathname, router]);
+
+  if (!order.isServiceStepComplete) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: 300,
+        }}
+      >
+        <CircularProgress size={40} />
+        <Typography
+          sx={{
+            mt: 3,
+            fontWeight: 500,
+            fontSize: 20,
+          }}
+        >
+          Loading
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <>

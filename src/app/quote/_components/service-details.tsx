@@ -59,7 +59,7 @@ export default function ServiceDetails({
   const handleServiceDetailsSubmit: SubmitHandler<ServiceFormInput> = (
     data
   ) => {
-    setOrder({ ...order, ...data });
+    setOrder({ ...order, ...data, isServiceStepComplete: true });
     router.push(pathname + "?" + createQueryString("active_step", "2"));
     window.scrollTo(0, 300);
   };

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import {
   Card,
@@ -26,6 +26,8 @@ import { loadStripe } from "@stripe/stripe-js";
 
 export default function QuotePage() {
   const searchParams = useSearchParams();
+  const serviceRef = useRef(null);
+
   const [order, setOrder] = useState<Order>({
     isGas: false,
     isEpc: false,
@@ -35,12 +37,14 @@ export default function QuotePage() {
     bedRooms: "",
     tflZone: "",
     time: "",
+    isServiceStepComplete: false,
     name: "",
     email: "",
     phone: "",
     house: "",
     postCode: "",
     city: "",
+    isPersonalStepComplete: false,
   });
 
   const activeStep = parseInt(searchParams.get("active_step") as string);
@@ -76,8 +80,6 @@ export default function QuotePage() {
     };
     fetchClientSecret();
   }, []);
-
-  console.log(activeStep);
 
   return (
     <Box

@@ -74,8 +74,6 @@ export default function PaymentResult() {
     fetchIntent();
   }, [stripe, searchParams]);
 
-  console.log(message);
-
   return (
     <div>
       {message?.status === "succeeded" && (
