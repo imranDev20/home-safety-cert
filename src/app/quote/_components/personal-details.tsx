@@ -49,12 +49,41 @@ export default function PersonalDetails({
   });
 
   const onPersonalDetailsSubmit: SubmitHandler<PersonalFormInput> = (data) => {
-    console.log(data);
-
-    setOrder({ ...order, ...data });
+    setOrder({ ...order, ...data, isPersonalStepComplete: true });
     router.push(pathname + "?" + createQueryString("active_step", "3"));
     window.scrollTo(0, 300);
   };
+
+  useEffect(() => {
+    if (!order.isServiceStepComplete) {
+      router.push(pathname + "?" + createQueryString("active_step", "1"));
+    }
+  }, [order.isServiceStepComplete, pathname, router]);
+
+  if (!order.isServiceStepComplete) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: 300,
+        }}
+      >
+        <CircularProgress size={40} />
+        <Typography
+          sx={{
+            mt: 3,
+            fontWeight: 500,
+            fontSize: 20,
+          }}
+        >
+          Loading
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <>

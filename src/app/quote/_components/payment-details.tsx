@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   PaymentElement,
   useElements,
@@ -17,6 +17,12 @@ export default function PaymentDetails({ order }: { order: Order }) {
   const elements = useElements();
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (!order.isPersonalStepComplete) {
+      router.push(pathname + "?" + createQueryString("active_step", "1"));
+    }
+  }, [order.isPersonalStepComplete, pathname, router]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

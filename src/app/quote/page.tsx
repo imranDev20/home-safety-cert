@@ -37,12 +37,14 @@ export default function QuotePage() {
     bedRooms: "",
     tflZone: "",
     time: "",
+    isServiceStepComplete: false,
     name: "",
     email: "",
     phone: "",
     house: "",
     postCode: "",
     city: "",
+    isPersonalStepComplete: false,
   });
 
   const activeStep = parseInt(searchParams.get("active_step") as string);
