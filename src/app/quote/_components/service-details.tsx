@@ -478,7 +478,7 @@ export default function ServiceDetails({
                 <RadioGroup {...field}>
                   <FormControlLabel value="no" control={<Radio />} label="No" />
                   <FormControlLabel
-                    value="tfl_1"
+                    value="inside_tfl_1"
                     control={<Radio />}
                     label={
                       <Typography>
@@ -496,7 +496,7 @@ export default function ServiceDetails({
                     }
                   />
                   <FormControlLabel
-                    value="tfl_5"
+                    value="outside_tfl_5"
                     control={<Radio />}
                     label={
                       <Typography>

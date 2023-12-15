@@ -12,6 +12,7 @@ import PersonalDetails from "./_components/personal-details";
 import { Order } from "@/types/misc";
 import { useSearchParams } from "next/navigation";
 import Payments from "./_components/payments";
+import Confirmation from "./_components/confirmation";
 
 export default function QuotePage() {
   const searchParams = useSearchParams();
@@ -66,7 +67,13 @@ export default function QuotePage() {
           pb: 7,
         }}
       >
-        <Grid container spacing={3}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            position: "relative",
+          }}
+        >
           <Grid item md={8}>
             <Card
               elevation={0}
@@ -85,6 +92,8 @@ export default function QuotePage() {
                 {activeStep === 2 ? (
                   <PersonalDetails order={order} setOrder={setOrder} />
                 ) : null}
+
+                {activeStep === 3 ? <Confirmation order={order} /> : null}
 
                 <Payments activeStep={activeStep} order={order} />
               </CardContent>

@@ -255,7 +255,7 @@ export default function PersonalDetails({
               mt: 2,
             }}
           >
-            Next: Payment Details
+            Next: Confirmation
           </Button>
         </Grid>
       </Grid>

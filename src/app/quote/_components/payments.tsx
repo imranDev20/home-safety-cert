@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-import { createQueryString } from "@/shared/functions";
+import { createQueryString, getServiceItems } from "@/shared/functions";
 import dayjs from "dayjs";
+import { priceInfo } from "@/shared/constants";
 
 export default function Payments({
   activeStep,
@@ -43,83 +44,6 @@ export default function Payments({
   useEffect(() => {
     const fetchClientSecret = async () => {
       try {
-        const priceInfo = [
-          {
-            service: "gas",
-            type: "appliances",
-            price: [
-              {
-                quantity: "1",
-                price: 80,
-              },
-              {
-                quantity: "2",
-                price: 100,
-              },
-              { quantity: "3", price: 120 },
-            ],
-          },
-          {
-            service: "eicr",
-            type: "fuseBoards",
-            price: [
-              {
-                quantity: "1",
-                price: 150,
-              },
-              {
-                quantity: "2",
-                price: 200,
-              },
-              { quantity: "3", price: "Call for Price" },
-            ],
-          },
-          {
-            service: "epc",
-            type: "bedRooms",
-            price: [
-              {
-                quantity: "0-3",
-                price: 80,
-              },
-              {
-                quantity: "4-6",
-                price: 100,
-              },
-            ],
-          },
-          {
-            type: "tflZone",
-            price: [
-              {
-                quantity: "tfl_1",
-                price: 80,
-              },
-              {
-                quantity: "tfl_5",
-                price: 100,
-              },
-            ],
-          },
-          {
-            type: "time",
-            price: [
-              {
-                quantity: "24",
-                price: 100,
-              },
-              {
-                quantity: "48",
-                price: 40,
-              },
-              {
-                quantity: "other",
-                price: 0,
-              },
-            ],
-          },
-        ];
-
         const orderPayload = {
           name: order.name,
           email: order.email,
@@ -128,21 +52,22 @@ export default function Payments({
           postCode: order.postCode,
           city: order.city,
 
-          items: Object.entries(order)
-            .filter(([key, value]) =>
-              priceInfo.map((price) => price.type).includes(key)
-            )
-            .filter(([key, value]) => value !== "")
-            .map(([key, value]) => ({
-              name: key,
-              quantity: priceInfo
-                .find((price) => price.type === key)
-                ?.price.find((val) => val.quantity === value)?.quantity,
+          zone: {
+            name: order.tflZone,
+            price:
+              order.tflZone === "inside_tfl_1"
+                ? 30
+                : order.tflZone === "outside_tfl_5"
+                ? 10
+                : 0,
+          },
 
-              price: priceInfo
-                .find((price) => price.type === key)
-                ?.price.find((val) => val.quantity === value)?.price,
-            })),
+          time: {
+            name: order.time || order.date,
+            price: order.time === "24" ? 100 : order.time === "48" ? 40 : 0,
+          },
+
+          items: getServiceItems(order),
           ...(order.date ? { date: dayjs(order.date).format() } : null),
         };
 
@@ -174,8 +99,8 @@ export default function Payments({
             },
           }}
         >
-          {activeStep === 3 ? <PaymentDetails order={order} /> : null}
-          {activeStep === 4 ? <Outcome /> : null}
+          {activeStep === 4 ? <PaymentDetails order={order} /> : null}
+          {activeStep === 5 ? <Outcome /> : null}
         </Elements>
       )}
     </>

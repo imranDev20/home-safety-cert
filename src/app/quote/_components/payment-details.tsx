@@ -35,7 +35,7 @@ export default function PaymentDetails({ order }: { order: Order }) {
           window.location.origin +
           window.location.pathname +
           "?" +
-          createQueryString("active_step", "4"),
+          createQueryString("active_step", "5"),
         receipt_email: order.email,
       },
     });
@@ -47,7 +47,7 @@ export default function PaymentDetails({ order }: { order: Order }) {
       router.push(
         pathname +
           "?" +
-          createQueryString("active_step", "4") +
+          createQueryString("active_step", "5") +
           "&" +
           createQueryString("payment_intent", response.paymentIntent.id) +
           "&" +
