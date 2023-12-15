@@ -67,7 +67,7 @@ export default function RightSidebarStepper({
             }}
           />
           <Stepper activeStep={activeStep - 1} orientation="vertical">
-            {steps.map((step, index) => (
+            {steps.map((step) => (
               <Step key={step.label}>
                 <StepLabel
                   sx={{

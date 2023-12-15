@@ -1,4 +1,5 @@
 import { SvgIconComponent } from "@mui/icons-material";
+import { Dayjs } from "dayjs";
 
 export type Faq = {
   id: number;
@@ -42,4 +43,5 @@ export type Order = {
   postCode: string;
   city: string;
   isPersonalStepComplete: boolean;
+  date: null | Dayjs;
 };

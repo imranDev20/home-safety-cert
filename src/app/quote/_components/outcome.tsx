@@ -233,7 +233,7 @@ export default function Outcome() {
             variant="blue-outlined"
             onClick={() => {
               router.push(
-                pathname + "?" + createQueryString("active_step", "3")
+                pathname + "?" + createQueryString("active_step", "4")
               );
             }}
             sx={{
