@@ -226,16 +226,17 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
                 ))}
               </Box>
 
-              <Button
+              {/* <Button
                 variant="blue"
                 color="primary"
                 href="/quote/"
+                
                 LinkComponent={Link}
                 sx={{ ml: 2, display: { xs: "none", lg: "flex" } }}
                 endIcon={<CgArrowLongRight />}
               >
                 Request a Quote
-              </Button>
+              </Button> */}
 
               <IconButton
                 color="inherit"
