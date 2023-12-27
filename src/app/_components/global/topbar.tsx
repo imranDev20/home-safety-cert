@@ -57,7 +57,7 @@ const Topbar = () => {
             </Link>
             <Link
               underline="none"
-              href="mailto:hello@homesafetycert.co.uk"
+              href="mailto:info@homesafetycert.co.uk"
               sx={{
                 px: 3,
                 py: 1.5,

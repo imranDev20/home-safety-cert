@@ -89,13 +89,20 @@ export default function QuotePage() {
                 {activeStep === 1 || Number.isNaN(activeStep) ? (
                   <ServiceDetails order={order} setOrder={setOrder} />
                 ) : null}
-                {activeStep === 2 ? (
+                {activeStep === 2 && order.isServiceStepComplete ? (
                   <PersonalDetails order={order} setOrder={setOrder} />
                 ) : null}
 
-                {activeStep === 3 ? <Confirmation order={order} /> : null}
+                {activeStep === 3 &&
+                order.isServiceStepComplete &&
+                order.isPersonalStepComplete ? (
+                  <Confirmation order={order} />
+                ) : null}
 
-                <Payments activeStep={activeStep} order={order} />
+                {order.isPersonalStepComplete &&
+                  order.isServiceStepComplete && (
+                    <Payments activeStep={activeStep} order={order} />
+                  )}
               </CardContent>
             </Card>
           </Grid>

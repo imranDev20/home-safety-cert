@@ -1,5 +1,9 @@
 import { priceInfo } from "@/shared/constants";
-import { createQueryString, getServiceItems } from "@/shared/functions";
+import {
+  calculateTotal,
+  createQueryString,
+  getServiceItems,
+} from "@/shared/functions";
 import { Order } from "@/types/misc";
 import { Box, Button, Typography } from "@mui/material";
 import dayjs from "dayjs";
@@ -179,6 +183,8 @@ export default function Confirmation({ order }: { order: Order }) {
             alignItems: "center",
             px: 2,
             py: 2,
+            border: "1px solid",
+            borderColor: "rgba(0, 0, 0, 0.12)",
           }}
         >
           <Box>
@@ -189,35 +195,131 @@ export default function Confirmation({ order }: { order: Order }) {
                 fontSize: 15,
               }}
             >
-              {order.tflZone === "inside_tfl_1"
-                ? "Inside TFL Zone 1"
-                : order.tflZone === "outside_tfl_5"
-                ? "Outside TFL Zone 5"
-                : "None"}
+              Services + Additional
             </Typography>
           </Box>
           <Box>
             £
-            {order.tflZone === "inside_tfl_1"
-              ? 30
-              : order.tflZone === "outside_tfl_5"
-              ? 10
-              : 0}
+            {calculateTotal([
+              ...items.map((item) => parseInt(item.price as string)),
+              order.tflZone === "inside_tfl_1"
+                ? 30
+                : order.tflZone === "outside_tfl_5"
+                ? 10
+                : 0,
+              order.time === "24" ? 100 : order.time === "48" ? 40 : 0,
+            ])}
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            py: 2,
+          }}
+        >
+          <Box>
+            <Typography>VAT</Typography>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontSize: 15,
+              }}
+            >
+              20% of Total
+            </Typography>
+          </Box>
+          <Box>
+            £
+            {calculateTotal([
+              ...items.map((item) => parseInt(item.price as string)),
+              order.tflZone === "inside_tfl_1"
+                ? 30
+                : order.tflZone === "outside_tfl_5"
+                ? 10
+                : 0,
+              order.time === "24" ? 100 : order.time === "48" ? 40 : 0,
+            ]) * 0.2}
           </Box>
         </Box>
       </Box>
 
-      <Button
-        variant="blue"
-        onClick={() => {
-          router.push(pathname + "?" + createQueryString("active_step", "4"));
-        }}
+      <Box
         sx={{
-          mt: 2,
+          border: "1px solid",
+          borderColor: "rgba(0, 0, 0, 0.12)",
+          borderRadius: 1,
+          mt: 4,
         }}
       >
-        Next: Payment Details
-      </Button>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            py: 2,
+            border: "1px solid",
+            borderColor: "rgba(0, 0, 0, 0.12)",
+          }}
+        >
+          <Box>
+            <Typography>Total</Typography>
+            <Typography
+              sx={{
+                color: "text.secondary",
+                fontSize: 15,
+              }}
+            >
+              Including VAT
+            </Typography>
+          </Box>
+          <Box>
+            £
+            {calculateTotal([
+              ...items.map((item) => parseInt(item.price as string)),
+              order.tflZone === "inside_tfl_1"
+                ? 30
+                : order.tflZone === "outside_tfl_5"
+                ? 10
+                : 0,
+              order.time === "24" ? 100 : order.time === "48" ? 40 : 0,
+            ]) +
+              calculateTotal([
+                ...items.map((item) => parseInt(item.price as string)),
+                order.tflZone === "inside_tfl_1"
+                  ? 30
+                  : order.tflZone === "outside_tfl_5"
+                  ? 10
+                  : 0,
+                order.time === "24" ? 100 : order.time === "48" ? 40 : 0,
+              ]) *
+                0.2}
+          </Box>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
+          variant="blue"
+          onClick={() => {
+            router.push(pathname + "?" + createQueryString("active_step", "4"));
+          }}
+          sx={{
+            mt: 2,
+          }}
+        >
+          Next: Payment Details
+        </Button>
+      </Box>
     </>
   );
 }

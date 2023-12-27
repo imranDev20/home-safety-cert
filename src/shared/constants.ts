@@ -47,7 +47,7 @@ export const SOCIALS = [
 ];
 
 const ADDRESS = "London, Great Britain, UK";
-const EMAIL = "hello@homesafetycert.co.uk";
+const EMAIL = "info@homesafetycert.co.uk";
 const PHONE = "020 3488 4929";
 const WORKING_HOURS = "Mon - Fri: 08:00 - 18:00";
 

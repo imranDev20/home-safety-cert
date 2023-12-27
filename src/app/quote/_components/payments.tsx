@@ -8,7 +8,6 @@ import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import { createQueryString, getServiceItems } from "@/shared/functions";
 import dayjs from "dayjs";
-import { priceInfo } from "@/shared/constants";
 
 export default function Payments({
   activeStep,

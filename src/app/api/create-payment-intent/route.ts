@@ -14,11 +14,21 @@ export async function POST(req: NextRequest) {
   try {
     const order = await req.json();
 
-    console.log(order);
-
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
-      amount: calculateTotal(order.items.map((item: any) => item.price)),
+      amount:
+        (calculateTotal([
+          ...order.items.map((item: any) => item.price),
+          order.zone.price,
+          order.time.price,
+        ]) +
+          calculateTotal([
+            ...order.items.map((item: any) => item.price),
+            order.zone.price,
+            order.time.price,
+          ]) *
+            0.2) *
+        100,
       payment_method_types: ["link", "card", "paypal", "revolut_pay"],
       description: "Thanks for your purchase!",
     });
@@ -27,6 +37,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           clientSecret: paymentIntent.client_secret,
+          orderId: paymentIntent.id,
         },
         {
           status: 200,
