@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export type ServiceFormInput = {
   isGas: boolean;
   isEicr: boolean;
@@ -7,6 +9,7 @@ export type ServiceFormInput = {
   bedRooms: string;
   tflZone: string;
   time: string;
+  date: Dayjs | null;
 };
 
 export type PersonalFormInput = {

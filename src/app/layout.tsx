@@ -5,7 +5,6 @@ import Topbar from "./_components/global/topbar";
 import { Metadata } from "next";
 import Footer from "./_components/global/footer";
 import TopLoader from "./_components/global/top-loader";
-import { SnackbarProvider } from "notistack";
 
 export const metadata: Metadata = {
   title: "Property Certification and Gas Safety Services | Home Safety Cert",

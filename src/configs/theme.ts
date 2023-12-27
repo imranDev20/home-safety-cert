@@ -109,7 +109,7 @@ export const theme = createTheme({
       default: "white",
       paper: "#fff",
     },
-    divider: "#ddd",
+    // divider: "#ddd",
   },
 
   components: {

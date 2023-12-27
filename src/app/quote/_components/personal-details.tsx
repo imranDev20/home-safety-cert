@@ -152,16 +152,10 @@ export default function PersonalDetails({
             control={control}
             defaultCountry="GB"
             inputComponent={PhoneNumberInput}
-            placeholder="Your Phone number"
+            placeholder="Your phone number"
             variant="outlined"
             country="GB"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <BsPhone />
-                </InputAdornment>
-              ),
-            }}
+            label="Your phone number"
             rules={{
               required: "You did not provide a phone number",
               validate: (value: string) => {
@@ -261,7 +255,7 @@ export default function PersonalDetails({
               mt: 2,
             }}
           >
-            Next: Payment Details
+            Next: Confirmation
           </Button>
         </Grid>
       </Grid>

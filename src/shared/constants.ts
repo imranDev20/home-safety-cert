@@ -47,7 +47,7 @@ export const SOCIALS = [
 ];
 
 const ADDRESS = "London, Great Britain, UK";
-const EMAIL = "hello@homesafetycert.co.uk";
+const EMAIL = "info@homesafetycert.co.uk";
 const PHONE = "020 3488 4929";
 const WORKING_HOURS = "Mon - Fri: 08:00 - 18:00";
 
@@ -410,6 +410,56 @@ export const SERVICES: Service[] = [
       { name: "Emergency Light Certification (up to 8 units)", price: 130 },
       { name: "Fire Alarm Certification (up to 8 units)", price: 130 },
       { name: "Fire Risk Assessment (4/6 Bedrooms)", price: 350 },
+    ],
+  },
+];
+
+export const priceInfo = [
+  {
+    service: "gas",
+    label: "Gas",
+    type: "appliances",
+    price: [
+      {
+        quantity: "1",
+        price: 80,
+      },
+      {
+        quantity: "2",
+        price: 100,
+      },
+      { quantity: "3", price: 120 },
+    ],
+  },
+  {
+    service: "eicr",
+    label: "EICR",
+    type: "fuseBoards",
+    price: [
+      {
+        quantity: "1",
+        price: 150,
+      },
+      {
+        quantity: "2",
+        price: 200,
+      },
+      { quantity: "3", price: "Call for Price" },
+    ],
+  },
+  {
+    service: "epc",
+    label: "EPC",
+    type: "bedRooms",
+    price: [
+      {
+        quantity: "0-3",
+        price: 80,
+      },
+      {
+        quantity: "4-6",
+        price: 100,
+      },
     ],
   },
 ];

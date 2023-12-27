@@ -18,12 +18,6 @@ export default function PaymentDetails({ order }: { order: Order }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (!order.isPersonalStepComplete) {
-      router.push(pathname + "?" + createQueryString("active_step", "1"));
-    }
-  }, [order.isPersonalStepComplete, pathname, router]);
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -33,58 +27,65 @@ export default function PaymentDetails({ order }: { order: Order }) {
 
     setLoading(true);
 
-    stripe
-      .confirmPayment({
-        elements,
-        redirect: "if_required",
-        confirmParams: {
-          return_url:
-            window.location.origin +
-            window.location.pathname +
-            "?" +
-            createQueryString("active_step", "4"),
-          receipt_email: order.email,
-        },
-      })
-      .then((res) => {
-        setLoading(false);
-        if (res.error) {
-          router.push(
-            pathname +
-              "?" +
-              createQueryString("active_step", "4") +
-              "&" +
-              createQueryString(
-                "payment_intent",
-                res.error.payment_intent?.id as string
-              ) +
-              "&" +
-              createQueryString(
-                "payment_intent_client_secret",
-                res.error.payment_intent?.client_secret as string
-              ) +
-              "&" +
-              createQueryString("redirect_status", "failed")
-          );
-          setStatus(res.error.message);
-        } else {
-          router.push(
-            pathname +
-              "?" +
-              createQueryString("active_step", "4") +
-              "&" +
-              createQueryString("payment_intent", res.paymentIntent.id) +
-              "&" +
-              createQueryString(
-                "payment_intent_client_secret",
-                res.paymentIntent.client_secret as string
-              ) +
-              "&" +
-              createQueryString("redirect_status", res.paymentIntent.status)
-          );
-          setStatus(res.paymentIntent.status);
-        }
-      });
+    const response = await stripe.confirmPayment({
+      elements,
+      redirect: "if_required",
+      confirmParams: {
+        return_url:
+          window.location.origin +
+          window.location.pathname +
+          "?" +
+          createQueryString("active_step", "5"),
+        receipt_email: order.email,
+      },
+    });
+
+    console.log(response);
+    setLoading(false);
+
+    if (response.paymentIntent) {
+      router.push(
+        pathname +
+          "?" +
+          createQueryString("active_step", "5") +
+          "&" +
+          createQueryString("payment_intent", response.paymentIntent.id) +
+          "&" +
+          createQueryString(
+            "payment_intent_client_secret",
+            response.paymentIntent.client_secret as string
+          ) +
+          "&" +
+          createQueryString("redirect_status", response.paymentIntent.status)
+      );
+      setStatus(response.paymentIntent.status);
+    }
+
+    // use this code if we ever need to show error as outcome
+    // if (response.error) {
+    //   router.push(
+    //     pathname +
+    //       "?" +
+    //       createQueryString("active_step", "4") +
+    //       "&" +
+    //       createQueryString(
+    //         "payment_intent",
+    //         response.error.payment_intent?.id as string
+    //       ) +
+    //       "&" +
+    //       createQueryString(
+    //         "payment_intent_client_secret",
+    //         response.error.payment_intent?.client_secret as string
+    //       ) +
+    //       "&" +
+    //       createQueryString("redirect_status", "failed")
+    //   );
+    // }
+
+    if (response.error) {
+      setStatus(response.error.message);
+      return;
+    }
   };
 
   return (

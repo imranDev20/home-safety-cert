@@ -1,6 +1,15 @@
 "use client";
 import { INFO } from "@/shared/constants";
-import { Box, Container, Grid, Link, Typography } from "@mui/material";
+import { Login } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Link,
+  Typography,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
   BsFacebook,
@@ -48,7 +57,7 @@ const Topbar = () => {
             </Link>
             <Link
               underline="none"
-              href="mailto:hello@homesafetycert.co.uk"
+              href="mailto:info@homesafetycert.co.uk"
               sx={{
                 px: 3,
                 py: 1.5,
@@ -89,7 +98,7 @@ const Topbar = () => {
             </Typography>
           </Grid>
           <Grid item sm={1}></Grid>
-          <Grid item container sm={4} display="flex" justifyContent="flex-end">
+          <Grid item sm={4} display="flex" justifyContent="flex-end">
             <Link
               href="#"
               sx={{
@@ -140,6 +149,30 @@ const Topbar = () => {
             >
               <BsTwitter fontSize={14} />
             </Link>
+
+            <Box
+              sx={{
+                pl: 1.5,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                startIcon={
+                  <Login
+                    sx={{
+                      color: "secondary.main",
+                    }}
+                  />
+                }
+                sx={{
+                  color: "white",
+                  fontSize: 12,
+                }}
+              >
+                Login
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Container>

@@ -14,13 +14,15 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { SnackbarProvider, enqueueSnackbar } from "notistack";
+import { SnackbarProvider } from "notistack";
 import { createQueryString, isObjectEmpty } from "@/shared/functions";
 import { ServiceFormInput } from "@/types/form";
 import { Order } from "@/types/misc";
 import { usePathname, useRouter } from "next/navigation";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 export default function ServiceDetails({
   order,
@@ -49,12 +51,14 @@ export default function ServiceDetails({
       bedRooms: order.bedRooms || "",
       tflZone: order.tflZone || "",
       time: order.time || "",
+      date: order.date || null,
     },
   });
 
   const isGas = watch("isGas");
   const isEicr = watch("isEicr");
   const isEpc = watch("isEpc");
+  const time = watch("time");
 
   const handleServiceDetailsSubmit: SubmitHandler<ServiceFormInput> = (
     data
@@ -62,6 +66,11 @@ export default function ServiceDetails({
     setOrder({ ...order, ...data, isServiceStepComplete: true });
     router.push(pathname + "?" + createQueryString("active_step", "2"));
     window.scrollTo(0, 300);
+  };
+
+  const daysBefore = () => {
+    const today = dayjs();
+    return dayjs(today.set("hour", today.get("hour") + 72));
   };
 
   return (
@@ -152,21 +161,60 @@ export default function ServiceDetails({
                 >
                   How many gas appliances does your property have?
                 </FormLabel>
-                <RadioGroup row {...field}>
+                <RadioGroup {...field}>
                   <FormControlLabel
                     value={1}
                     control={<Radio />}
-                    label="1 Applicance"
+                    label={
+                      <Typography>
+                        1 Applicance -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £80 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value={2}
                     control={<Radio />}
-                    label="2 Appliance"
+                    label={
+                      <Typography>
+                        2 Applicances -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £100 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value={3}
                     control={<Radio />}
-                    label="3 Appliance"
+                    label={
+                      <Typography>
+                        3 Applicances -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £120 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                 </RadioGroup>
               </FormControl>
@@ -238,21 +286,60 @@ export default function ServiceDetails({
                 >
                   How many Fuse Boards does your property have?
                 </FormLabel>
-                <RadioGroup row {...field}>
+                <RadioGroup {...field}>
                   <FormControlLabel
                     value={1}
                     control={<Radio />}
-                    label="1 unit"
+                    label={
+                      <Typography>
+                        1 Unit -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £150 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value={2}
                     control={<Radio />}
-                    label="2 units"
+                    label={
+                      <Typography>
+                        2 Units -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £200 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value={3}
                     control={<Radio />}
-                    label="3 units"
+                    label={
+                      <Typography>
+                        3 Units -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( Call for Price )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                 </RadioGroup>
               </FormControl>
@@ -324,16 +411,42 @@ export default function ServiceDetails({
                 >
                   How many Bed Rooms does your property has?
                 </FormLabel>
-                <RadioGroup row {...field}>
+                <RadioGroup {...field}>
                   <FormControlLabel
                     value="0-3"
                     control={<Radio />}
-                    label="0-3 bedrooms"
+                    label={
+                      <Typography>
+                        0-3 Bedrooms -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £80 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value="4-6"
                     control={<Radio />}
-                    label="4-6 bedrooms"
+                    label={
+                      <Typography>
+                        4-6 Bedrooms -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( £100 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                 </RadioGroup>
               </FormControl>
@@ -365,14 +478,40 @@ export default function ServiceDetails({
                 <RadioGroup {...field}>
                   <FormControlLabel value="no" control={<Radio />} label="No" />
                   <FormControlLabel
-                    value="tfl_1"
+                    value="inside_tfl_1"
                     control={<Radio />}
-                    label="Inside TFL Zone 1"
+                    label={
+                      <Typography>
+                        Inside TFL Zone 1 -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( +£30 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
-                    value="tfl_5"
+                    value="outside_tfl_5"
                     control={<Radio />}
-                    label="Outside TFL Zone 5"
+                    label={
+                      <Typography>
+                        Outside TFL Zone 5 -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( +£10 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                 </RadioGroup>
               </FormControl>
@@ -401,24 +540,74 @@ export default function ServiceDetails({
                 </FormLabel>
                 <RadioGroup {...field}>
                   <FormControlLabel
-                    value="24 hours"
+                    value="24"
                     control={<Radio />}
-                    label="Within the next 24 Hours"
+                    label={
+                      <Typography>
+                        Within the next 24 Hour -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( +£100 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
-                    value="48 hours"
+                    value="48"
                     control={<Radio />}
-                    label="Within the next 48 Hours"
+                    label={
+                      <Typography>
+                        Within the next 48 Hours -{" "}
+                        <Typography
+                          component="span"
+                          sx={{
+                            color: "primary.main",
+                            fontWeight: 600,
+                          }}
+                        >
+                          ( +£40 )
+                        </Typography>
+                      </Typography>
+                    }
                   />
                   <FormControlLabel
                     value="other"
                     control={<Radio />}
                     label="Some other time"
                   />
+
+                  {time === "other" && (
+                    <Controller
+                      name="date"
+                      rules={{
+                        required: "Please specify the date",
+                      }}
+                      control={control}
+                      render={({ field }) => (
+                        <DatePicker
+                          minDate={daysBefore()}
+                          format="DD/MM/YYYY"
+                          {...field}
+                          sx={{
+                            mt: 1,
+                          }}
+                          slotProps={{
+                            textField: { size: "small" },
+                          }}
+                        />
+                      )}
+                    />
+                  )}
                 </RadioGroup>
               </FormControl>
             )}
           />
+          <HookFormError name="date" errors={errors} />
           <HookFormError name="time" errors={errors} />
         </Grid>
       </Grid>
@@ -442,7 +631,7 @@ export default function ServiceDetails({
           type="submit"
           variant="blue"
           sx={{
-            mt: 2,
+            mt: 5,
           }}
         >
           Next: Personal Details

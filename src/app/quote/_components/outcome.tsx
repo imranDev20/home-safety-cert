@@ -17,8 +17,10 @@ export default function Outcome() {
     text: string;
   }>(null);
   const pathname = usePathname();
-
-  useEffect(() => {}, []);
+  const [info, setInfo] = useState({
+    email: "",
+    id: "",
+  });
 
   useEffect(() => {
     if (!stripe) {
@@ -36,6 +38,11 @@ export default function Outcome() {
         const { paymentIntent } = response;
 
         console.log(response);
+
+        setInfo({
+          email: response.paymentIntent?.receipt_email as string,
+          id: response.paymentIntent?.id as string,
+        });
 
         if (!paymentIntent) {
           console.log("Payment intent wasn't found");
@@ -127,7 +134,7 @@ export default function Outcome() {
                 fontWeight: 500,
               }}
             >
-              imrankabir997@gmail.com
+              {info.email}
             </Typography>{" "}
             to monitor your order.
           </Typography>
@@ -147,7 +154,7 @@ export default function Outcome() {
                 fontWeight: 500,
               }}
             >
-              8219038109201
+              {info.id}
             </Typography>
           </Typography>
           <Typography
@@ -233,7 +240,7 @@ export default function Outcome() {
             variant="blue-outlined"
             onClick={() => {
               router.push(
-                pathname + "?" + createQueryString("active_step", "3")
+                pathname + "?" + createQueryString("active_step", "4")
               );
             }}
             sx={{

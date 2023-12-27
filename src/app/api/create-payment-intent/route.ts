@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 // This is your test secret API key.
@@ -6,15 +6,29 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-10-16",
 });
 
-const calculateOrderAmount = (items: { amount: number }[]) => {
-  return 1400;
-};
+function calculateTotal(numbers: number[]): number {
+  return numbers.reduce((total, num) => total + num, 0);
+}
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
+    const order = await req.json();
+
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
-      amount: 1999,
+      amount:
+        (calculateTotal([
+          ...order.items.map((item: any) => item.price),
+          order.zone.price,
+          order.time.price,
+        ]) +
+          calculateTotal([
+            ...order.items.map((item: any) => item.price),
+            order.zone.price,
+            order.time.price,
+          ]) *
+            0.2) *
+        100,
       payment_method_types: ["link", "card", "paypal", "revolut_pay"],
       description: "Thanks for your purchase!",
     });
@@ -23,6 +37,7 @@ export async function POST() {
       return NextResponse.json(
         {
           clientSecret: paymentIntent.client_secret,
+          orderId: paymentIntent.id,
         },
         {
           status: 200,

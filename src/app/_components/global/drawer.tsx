@@ -23,7 +23,7 @@ import {
 import { alpha } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import { CgArrowLongRight } from "react-icons/cg";
-import { ExpandMore, Menu as MenuIcon } from "@mui/icons-material";
+import { ExpandMore, Login, Menu as MenuIcon } from "@mui/icons-material";
 import Link from "next/link";
 
 import { DrawerAppBarProps, HideOnScrollProps } from "@/types/props";
@@ -236,6 +236,7 @@ const DrawerAppBar = ({ children }: DrawerAppBarProps) => {
               >
                 Request a Quote
               </Button>
+
               <IconButton
                 color="inherit"
                 aria-label="open drawer"

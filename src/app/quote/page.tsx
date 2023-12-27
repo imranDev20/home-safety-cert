@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
-import {
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Card, CardContent, Container, Grid } from "@mui/material";
 import PageHeader from "../_components/common/page-header";
 import BackgroundImage from "@/images/about-bg.jpeg";
 import Heading from "../_components/common/heading";
@@ -16,13 +9,10 @@ import Paragraph from "../_components/common/paragraph";
 import RightSidebarStepper from "./_components/right-sidebar-stepper";
 import ServiceDetails from "./_components/service-details";
 import PersonalDetails from "./_components/personal-details";
-import PaymentDetails from "./_components/payment-details";
-import Outcome from "./_components/outcome";
 import { Order } from "@/types/misc";
 import { useSearchParams } from "next/navigation";
-import { Elements } from "@stripe/react-stripe-js";
-import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
+import Payments from "./_components/payments";
+import Confirmation from "./_components/confirmation";
 
 export default function QuotePage() {
   const searchParams = useSearchParams();
@@ -45,41 +35,14 @@ export default function QuotePage() {
     postCode: "",
     city: "",
     isPersonalStepComplete: false,
+    date: null,
   });
 
-  const activeStep = parseInt(searchParams.get("active_step") as string);
+  const activeStep = parseInt(searchParams.get("active_step") as string) || 1;
 
   useEffect(() => {
     window.scrollTo(0, 300);
   }, [activeStep]);
-
-  const [stripePromise, setStripePromise] = useState<any>();
-  const [clientSecret, setClientSecret] = useState("");
-
-  useEffect(() => {
-    const fetchKey = async () => {
-      try {
-        const response = await axios.get("/api/config");
-        setStripePromise(loadStripe(response.data.publishableKey));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchKey();
-  }, []);
-
-  useEffect(() => {
-    const fetchClientSecret = async () => {
-      try {
-        const response = await axios.post("/api/create-payment-intent");
-        setClientSecret(response.data.clientSecret);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchClientSecret();
-  }, []);
 
   return (
     <Box
@@ -104,7 +67,13 @@ export default function QuotePage() {
           pb: 7,
         }}
       >
-        <Grid container spacing={3}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            position: "relative",
+          }}
+        >
           <Grid item md={8}>
             <Card
               elevation={0}
@@ -117,50 +86,23 @@ export default function QuotePage() {
                   p: 3,
                 }}
               >
-                {stripePromise && clientSecret ? (
-                  <Elements
-                    stripe={stripePromise}
-                    options={{
-                      clientSecret,
-                      loader: "always",
+                {activeStep === 1 || Number.isNaN(activeStep) ? (
+                  <ServiceDetails order={order} setOrder={setOrder} />
+                ) : null}
+                {activeStep === 2 && order.isServiceStepComplete ? (
+                  <PersonalDetails order={order} setOrder={setOrder} />
+                ) : null}
 
-                      appearance: {
-                        theme: "stripe",
-                        labels: "floating",
-                      },
-                    }}
-                  >
-                    {activeStep === 1 || Number.isNaN(activeStep) ? (
-                      <ServiceDetails order={order} setOrder={setOrder} />
-                    ) : null}
-                    {activeStep === 2 ? (
-                      <PersonalDetails order={order} setOrder={setOrder} />
-                    ) : null}
-                    {activeStep === 3 ? <PaymentDetails order={order} /> : null}
-                    {activeStep === 4 ? <Outcome /> : null}
-                  </Elements>
-                ) : (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                      height: 300,
-                    }}
-                  >
-                    <CircularProgress size={40} />
-                    <Typography
-                      sx={{
-                        mt: 3,
-                        fontWeight: 500,
-                        fontSize: 20,
-                      }}
-                    >
-                      Loading
-                    </Typography>
-                  </Box>
-                )}
+                {activeStep === 3 &&
+                order.isServiceStepComplete &&
+                order.isPersonalStepComplete ? (
+                  <Confirmation order={order} />
+                ) : null}
+
+                {order.isPersonalStepComplete &&
+                  order.isServiceStepComplete && (
+                    <Payments activeStep={activeStep} order={order} />
+                  )}
               </CardContent>
             </Card>
           </Grid>
