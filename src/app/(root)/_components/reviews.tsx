@@ -37,7 +37,7 @@ const Reviews = () => {
 
 	return (
 		<Box sx={{ p: 7 }}>
-			<Typography
+			{/* <Typography
 				component="h3"
 				variant="h4"
 				textAlign="center"
@@ -122,7 +122,7 @@ const Reviews = () => {
 						</Slide>
 					))}
 				</Slider>
-			</CarouselProvider>
+			</CarouselProvider> */}
 		</Box>
 	);
 };
