@@ -1,7 +1,9 @@
 "use client";
 import Heading from "@/app/_components/common/heading";
 import Paragraph from "@/app/_components/common/paragraph";
-import { Button, Container, Grid, Typography } from "@mui/material";
+import AboutImage from "@/images/home-page-image.jpg";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 import { CgArrowLongRight } from "react-icons/cg";
 import { RxCheck } from "react-icons/rx";
@@ -22,8 +24,31 @@ const About = () => {
 					item
 					xs={12}
 					md={6}
-					sx={{ display: "flex", justifyContent: "center" }}
-				/>
+					sx={{
+						display: "flex",
+						justifyContent: "center",
+						p: 3,
+					}}
+				>
+					<Box
+						sx={{
+							position: "relative",
+							width: "100%",
+							height: "100%",
+							borderRadius: 3,
+							overflow: "hidden",
+						}}
+					>
+						<Image
+							src={AboutImage}
+							alt="Home Safety Image"
+							fill
+							style={{
+								objectFit: "contain",
+							}}
+						/>
+					</Box>
+				</Grid>
 				<Grid item xs={12} md={6}>
 					<Heading>
 						About Home Safety Cert - Our Commitment to Safety and Service

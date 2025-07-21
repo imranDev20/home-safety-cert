@@ -458,7 +458,7 @@ export const SERVICES: Service[] = [
 		id: 4,
 		name: "PAT",
 		Icon: PatIcon,
-		slug: "gas-safety-certificate",
+		slug: "portable-appliance-testing",
 		description:
 			"Get peace of mind with our reliable PAT testing certification.",
 		startingPrice: 120,
@@ -473,7 +473,7 @@ export const SERVICES: Service[] = [
 		id: 5,
 		name: "Emergency Light Certification",
 		Icon: ExitIcon,
-		slug: "gas-safety-certificate",
+		slug: "emergency-light-certificate",
 		description: "Expert certification for fully functional emergency lights.",
 		startingPrice: 150,
 
@@ -498,7 +498,7 @@ export const SERVICES: Service[] = [
 		id: 6,
 		name: "Fire Alarm Certificate",
 		Icon: FireAlarmIcon,
-		slug: "gas-safety-certificate",
+		slug: "fire-alarm-certificate",
 		description: "Get reliable certification for your fire alarm system.",
 		startingPrice: 150,
 
