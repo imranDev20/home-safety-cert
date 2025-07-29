@@ -46,7 +46,8 @@ export const SOCIALS = [
 	{ id: 4, name: "Instagram", icon: FaInstagram, href: "https://facebook.com" },
 ];
 
-const ADDRESS = "London, Great Britain, UK";
+const ADDRESS =
+	"Unit 1, Edward Cecil House, 799 London Road, West Thurrock, Grays, RM20 3LH";
 const EMAIL = "info@homesafetycert.co.uk";
 const PHONE = "020 3488 4929";
 const WORKING_HOURS = "Mon - Fri: 08:00 - 18:00";
