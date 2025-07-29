@@ -117,7 +117,7 @@ const Footer = () => {
 									href={
 										item === "Home"
 											? "/"
-											: "/" + item.toLowerCase().replaceAll(" ", "-")
+											: `/${item.toLowerCase().replaceAll(" ", "-")}`
 									}
 								>
 									{item}
@@ -139,7 +139,7 @@ const Footer = () => {
 								<Stack
 									key={item.id}
 									direction="row"
-									alignItems="center"
+									alignItems="flex-start" // Changed from 'center' to 'flex-start'
 									my={2}
 									sx={{
 										".MuiTypography-root:hover": {
@@ -167,10 +167,18 @@ const Footer = () => {
 										svg: {
 											mr: 2,
 											color: "secondary.main",
+											width: "20px", // Fixed width for icons
+											height: "20px", // Fixed height for icons
+											minWidth: "20px", // Prevent shrinking
+											flexShrink: 0, // Prevent icon from shrinking
 										},
 									}}
 								>
-									<item.icon />
+									<item.icon
+										style={{
+											marginTop: "3px",
+										}}
+									/>
 									{item.type.includes("email") ? (
 										<a href={`mailto:${item.text}`}>{item.text}</a>
 									) : item.type.includes("phone") ? (
